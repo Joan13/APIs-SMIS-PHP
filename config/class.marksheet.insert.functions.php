@@ -26,15 +26,15 @@
 
 	function find_pupil_sum_total_marks_sem_trim($pupil_id, $periode, $periode1, $periode2, $school_year){
 		global $database_connect;
-		$ress = "";
+		$ress = 0;
 
     	// if(count_pupil_marks($pupil_id, $periode, $school_year) != 0 && count_pupil_marks($pupil_id, $periode1, $school_year) != 0 && count_pupil_marks($pupil_id, $periode2, $school_year) != 0)
     	// {
-    		$request = $database_connect->prepare("SELECT SUM(total_marks) AS sum_main_marks FROM marks_info WHERE pupil=? AND (school_period=? OR school_period=? OR school_period=?) AND school_year=?");
-		$request->execute(array($pupil_id, $periode, $periode1, $periode2, $school_year));
+    	$request = $database_connect->prepare("SELECT SUM(total_marks) AS sum_total_marks FROM marks_info WHERE pupil=? AND school_year=? AND (school_period=? OR school_period=? OR school_period=?)");
+		$request->execute(array($pupil_id, $school_year, $periode, $periode1, $periode2));
 		$response = $request->fetchObject();
 
-		$ress = $response->sum_main_marks;
+		$ress = $response->sum_total_marks;
     	// }
 
     	return $ress;
@@ -163,10 +163,8 @@
 	function find_pupil_sum_main_marks_sem_trim($pupil_id, $periode, $periode1, $periode2, $school_year){
 		global $database_connect;
 		$ress = 0;
-
-    	
-    		$request = $database_connect->prepare("SELECT SUM(main_marks) AS sum_main_marks FROM marks_info WHERE pupil=? AND (school_period=? OR school_period=? OR school_period=?) AND school_year=?");
-		$request->execute(array($pupil_id, $periode, $periode1, $periode2, $school_year));
+    	$request = $database_connect->prepare("SELECT SUM(main_marks) AS sum_main_marks FROM marks_info WHERE pupil=? AND school_year=? AND (school_period=? OR school_period=? OR school_period=?)");
+		$request->execute(array($pupil_id, $school_year, $periode, $periode1, $periode2));
 		$response = $request->fetchObject();
 
 		$ress = $response->sum_main_marks;

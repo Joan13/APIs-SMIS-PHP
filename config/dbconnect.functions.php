@@ -10,12 +10,10 @@
 	// $dbuser = 'cseli1701093';
 	// $dbpassword = 'vttwkbtca3';
 
-	try
-	{
+	try {
 		$database_connect = new PDO('mysql:host='.$dbhost.';dbname='.$dbname,$dbuser,$dbpassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 	}
-	catch(Exception $database_error)
-	{
+	catch (Exception $database_error) {
 		die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
 	}
 
@@ -34,18 +32,18 @@
 	// 	die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
 	// }
 
-	$dbhostExport = 'localhost';
-	$dbnameExport = 'school_administration_export';
-	$dbuserExport = 'root';
-	$dbpasswordExport = 'root';
+	// $dbhostExport = 'localhost';
+	// $dbnameExport = 'school_administration_export';
+	// $dbuserExport = 'root';
+	// $dbpasswordExport = 'root';
 
-	try {
-		$database_connect_export = new PDO('mysql:host='.$dbhostExport.';dbname='.$dbnameExport,$dbuserExport,$dbpasswordExport, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-	}
-	catch(Exception $database_error)
-	{
-		die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
-	}
+	// try {
+	// 	$database_connect_export = new PDO('mysql:host='.$dbhostExport.';dbname='.$dbnameExport,$dbuserExport,$dbpasswordExport, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
+	// }
+	// catch(Exception $database_error)
+	// {
+	// 	die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
+	// }
 
 
 	// $school_name = "Ecole \"Académie La Renaisssance\"";
@@ -66,17 +64,17 @@
 	// $school_bp = "B.P. 2276 - BUKAVU";
 	// $email_school = "college.alfajiri@gmail.com";
 
-	$school_name = "Masomo";
+	// $school_name = "Masomo";
+	// // $school_name_abb = "Masomo";
 	// $school_name_abb = "Masomo";
-	$school_name_abb = "Masomo";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P.  - BUKAVU";
-	$email_school = "cs.elite@gmail.com";
-	$school_city = "Bukavu";
-	$school_province = "Sud-Kivu";
-	$school_commune = "Ibanda";
-	$phone_1 = "+243 991 776 858";
-	$phone_2 = "+243 819 009 678";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P.  - BUKAVU";
+	// $email_school = "cs.elite@gmail.com";
+	// $school_city = "Bukavu";
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 991 776 858";
+	// $phone_2 = "+243 819 009 678";
 
 	// $school_name = "Complexe Scolaire \"Élite\"";
 	// // $school_name_abb = "Masomo";
@@ -101,17 +99,17 @@
 	// $phone_1 = "+243 971 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	// $school_name = "Lycée Wima";
-	// // $school_name_abb = "Masomo";
-	// $school_name_abb = "Lycée Wima";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P. 135 - BUKAVU";
-	// $email_school = "lycee.wima@gmail.com";
-	// $school_city = "Bukavu";
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Kadutu";
-	// $phone_1 = "+243 994 108 986";
-	// $phone_2 = "+243 971 995 370";
+	$school_name = "Lycée Wima";
+	// $school_name_abb = "Masomo";
+	$school_name_abb = "Lycée Wima";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P. 135 - BUKAVU";
+	$email_school = "lycee.wima@gmail.com";
+	$school_city = "Bukavu";
+	$school_province = "Sud-Kivu";
+	$school_commune = "Kadutu";
+	$phone_1 = "+243 994 108 986";
+	$phone_2 = "+243 971 995 370";
 
 	// $school_name = "Collège Saint-Paul";
 	// $school_name_abb = "Collège Saint-Paul";

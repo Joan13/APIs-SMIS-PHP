@@ -68,7 +68,7 @@
         $bb2 = 0;
         $me = 0;
         $ma = 0;
-        $pourcentages = array();
+        $pourcentages = array("0");
         $pre_moyennes = 0;
 
         $query_pupils = "SELECT * FROM pupils_info WHERE school_year='$annee' AND class_school='$query_fetch->class_id' AND cycle_school='$query_fetch->cycle_id' AND class_order='$query_fetch->order_id' AND class_section='$query_fetch->section_id' AND class_option='$query_fetch->option_id'";
@@ -174,7 +174,6 @@
                 array_push($pourcentages, find_pupil_pourcentage_sem_trimt($response_pupils->pupil_id, 1, 2, 10, 3, 4, 11, $annee));
                 $pre_moyennes = $pre_moyennes + find_pupil_pourcentage_sem_trimt($response_pupils->pupil_id, 1, 2, 10, 3, 4, 11, $annee);
             }
-
         }
 
         $class['ee'] = $ee;
