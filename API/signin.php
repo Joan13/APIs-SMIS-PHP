@@ -9,41 +9,6 @@
 
     $response = array();
 
-    function make_users() {
-        global $database_connect;
-        $query = "SELECT * FROM users WHERE username=?";
-        $request = $database_connect->prepare($query);
-        $request->execute(array(""));
-        while($response = $request->fetchObject()) {
-            $poste = $response->poste;
-    
-            if ($poste == "1") {
-                $user = "principal@yambi.class";
-            } else if ($poste == "2") {
-                $user = "discipline@yambi.class";
-            } else if ($poste == "7") {
-                $user = "etudes@yambi.class";
-            } else if ($poste == "4") {
-                $user = "secretaire@yambi.class";
-            } else if ($poste == "5") {
-                $user = "enseignant@yambi.class";
-            } else if ($poste == "3") {
-                $user = "finances@yambi.class";
-            } else if ($poste == "6") {
-                $user = "caisse@yambi.class";
-            } else {
-                $user = "";
-            }
-    
-            if ($response->username == "") {
-                $update_query = "UPDATE users SET username='$user' WHERE user_id='$response->user_id'";
-                $update_request = $database_connect->query($update_query);
-            }
-        }
-    }
-
-    make_users();
-
     function login_credentials($username, $password) {
         global $database_connect;
         $query = "SELECT username, user_password, COUNT(*) AS count_user_exists FROM users WHERE username=? AND user_password=?";

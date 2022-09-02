@@ -99,15 +99,27 @@
 	// $phone_1 = "+243 971 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	$school_name = "Lycée Wima";
+	// $school_name = "Lycée Wima";
+	// // $school_name_abb = "Masomo";
+	// $school_name_abb = "Lycée Wima";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. 135 - BUKAVU";
+	// $email_school = "lycee.wima@gmail.com";
+	// $school_city = "Bukavu";
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Kadutu";
+	// $phone_1 = "+243 994 108 986";
+	// $phone_2 = "+243 971 995 370";
+
+	$school_name = "Complexe Scolaire \"Les Progrès\"";
 	// $school_name_abb = "Masomo";
-	$school_name_abb = "Lycée Wima";
+	$school_name_abb = "C. S. Les Progrès";
 	$devise_school = "Une école de référence";
-	$school_bp = "B.P. 135 - BUKAVU";
-	$email_school = "lycee.wima@gmail.com";
+	$school_bp = "B.P. - BUKAVU";
+	$email_school = "cs.lesprogres@gmail.com";
 	$school_city = "Bukavu";
 	$school_province = "Sud-Kivu";
-	$school_commune = "Kadutu";
+	$school_commune = "Ibanda";
 	$phone_1 = "+243 994 108 986";
 	$phone_2 = "+243 971 995 370";
 
@@ -131,65 +143,97 @@
 
     // Info about the connected member
     // Creating a function finding out all info about the connected member
-	function user_connected($user)
-	{
-		global $database_connect;
-		$session = array(
-			'user_id' => $_SESSION['user_connected']);
-		$query = 'SELECT * FROM users WHERE user_id=:user_id';
-		$request = $database_connect->prepare($query);
-		$request->execute($session);
-		$user = $request->fetchObject();
+	// function user_connected($user)
+	// {
+	// 	global $database_connect;
+	// 	$session = array(
+	// 		'user_id' => $_SESSION['user_connected']);
+	// 	$query = 'SELECT * FROM users WHERE user_id=:user_id';
+	// 	$request = $database_connect->prepare($query);
+	// 	$request->execute($session);
+	// 	$user = $request->fetchObject();
 
-		return $user;
-	}
+	// 	return $user;
+	// }
 
 
-    function session_in()
-	{
-		if(isset($_SESSION['user_connected']))
-		{
-			$logged = $_SESSION['user_connected'];
-		}
-		else
-		{
-			$logged = 0;
-		}
+    // function session_in()
+	// {
+	// 	if(isset($_SESSION['user_connected']))
+	// 	{
+	// 		$logged = $_SESSION['user_connected'];
+	// 	}
+	// 	else
+	// 	{
+	// 		$logged = 0;
+	// 	}
 
-		return $logged;
+	// 	return $logged;
+    // }
+
+	// function session_worker()
+	// {
+	// 	if(isset($_SESSION['worker_connected']))
+	// 	{
+	// 		$logged = $_SESSION['worker_connected'];
+	// 	}
+	// 	else
+	// 	{
+	// 		$logged = 0;
+	// 	}
+
+	// 	return $logged;
+    // }
+
+    // function detele_unfilled_class () {
+    // 	global $database_connect;
+
+    // 	$dr = "DELETE FROM classes_completed";
+	// 	$dr1 = $database_connect->query($dr);
+
+    // 	$query = "SELECT * FROM pupils_info";
+    // 	$request = $database_connect->query($query);
+    // 	while($response = $request->fetchObject()) {
+	// 		// $dr = "DELETE FROM classes_completed WHERE cycle_id=? AND class_id!=? AND order_id!=? AND section_id!=? AND option_id!=? AND school_year!=?";
+
+	// 		$classes_alignment = "$response->cycle_school, $response->class_school, $response->class_order, $response->class_section, $response->class_option, $response->school_year";
+
+	// 		insert_class_completed($response->cycle_school, $response->class_school, $response->class_order, $response->class_section, $response->class_option, $response->school_year, $classes_alignment);
+	// 	}
+	// }
+
+	function make_users() {
+        global $database_connect;
+        $query = "SELECT * FROM users WHERE username=?";
+        $request = $database_connect->prepare($query);
+        $request->execute(array(""));
+        while($response = $request->fetchObject()) {
+            $poste = $response->poste;
+    
+            if ($poste == "1") {
+                $user = "principal@yambi.class";
+            } else if ($poste == "2") {
+                $user = "discipline@yambi.class";
+            } else if ($poste == "7") {
+                $user = "etudes@yambi.class";
+            } else if ($poste == "4") {
+                $user = "secretaire@yambi.class";
+            } else if ($poste == "5") {
+                $user = "enseignant@yambi.class";
+            } else if ($poste == "3") {
+                $user = "finances@yambi.class";
+            } else if ($poste == "6") {
+                $user = "caisse@yambi.class";
+            } else {
+                $user = "";
+            }
+    
+            if ($response->username == "") {
+                $update_query = "UPDATE users SET username='$user' WHERE user_id='$response->user_id'";
+                $update_request = $database_connect->query($update_query);
+            }
+        }
     }
-
-	function session_worker()
-	{
-		if(isset($_SESSION['worker_connected']))
-		{
-			$logged = $_SESSION['worker_connected'];
-		}
-		else
-		{
-			$logged = 0;
-		}
-
-		return $logged;
-    }
-
-    function detele_unfilled_class () {
-    	global $database_connect;
-
-    	$dr = "DELETE FROM classes_completed";
-		$dr1 = $database_connect->query($dr);
-
-    	$query = "SELECT * FROM pupils_info";
-    	$request = $database_connect->query($query);
-    	while($response = $request->fetchObject()) {
-			// $dr = "DELETE FROM classes_completed WHERE cycle_id=? AND class_id!=? AND order_id!=? AND section_id!=? AND option_id!=? AND school_year!=?";
-
-			$classes_alignment = "$response->cycle_school, $response->class_school, $response->class_order, $response->class_section, $response->class_option, $response->school_year";
-
-			insert_class_completed($response->cycle_school, $response->class_school, $response->class_order, $response->class_section, $response->class_option, $response->school_year, $classes_alignment);
-		}
-	}
-
 
 	function delete_pupils() {
 		global $database_connect;
@@ -207,6 +251,7 @@
 		}
 	}
 
+	make_users();
 	delete_pupils();
 
 ?>

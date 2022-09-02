@@ -1,6 +1,6 @@
 <?php
 
-	function insert_pupil($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $id_number, $perm_number, $nat, $stat) {
+	function insert_pupil($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $id_number, $perm_number, $nat, $stat, $paiement_category) {
 		global $database_connect;
 
 		$count_pupil_exists_query = "SELECT first_name, second_name, last_name, gender, cycle_school, class_school, class_order, class_section, class_option, school_year, COUNT(*) AS pupil_exists FROM pupils_info WHERE first_name=? AND second_name=? AND last_name=? AND gender=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND school_year=?";
@@ -9,11 +9,11 @@
 		$count_pupil_exists_response = $count_pupil_exists_request->fetchObject();
 
 		if($count_pupil_exists_response->pupil_exists == 0) {
-			$array_insert = array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26);
-			$query = "INSERT INTO pupils_info(first_name, second_name, last_name, gender, birth_date, birth_place, father_names, mother_names, parents_alive, parents_state, father_principal_work, mother_principal_work, lives_with, cycle_school, class_school, class_order, class_section, class_option, school_year, email_address, physical_address, contact_phone_1, contact_phone_2, contact_phone_3, contact_phone_4, pupilIdentification, statut_scolaire, is_inactive, permanent_number, identification_number, nationality)
-				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			// $array_insert = array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $paiement_category);
+			$query = "INSERT INTO pupils_info(first_name, second_name, last_name, gender, birth_date, birth_place, father_names, mother_names, parents_alive, parents_state, father_principal_work, mother_principal_work, lives_with, cycle_school, class_school, class_order, class_section, class_option, school_year, email_address, physical_address, contact_phone_1, contact_phone_2, contact_phone_3, contact_phone_4, pupilIdentification, statut_scolaire, is_inactive, permanent_number, identification_number, nationality, paiement_category)
+				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			$request = $database_connect->prepare($query);
-			$request->execute(array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $stat, 0, $perm_number, $id_number, $nat));
+			$request->execute(array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $stat, 0, $perm_number, $id_number, $nat, $paiement_category));
 		}
 	}
 
