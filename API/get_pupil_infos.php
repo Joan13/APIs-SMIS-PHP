@@ -51,7 +51,7 @@
             array_push($paiements, $response_array_paiements);
         }
 
-        $queryfrais = "SELECT * FROM frais_divers WHERE pupil_id='$pupil_id' ORDER BY frais_divers_id DESC";
+        $queryfrais = "SELECT * FROM frais_divers WHERE pupil_id='$pupil_id' AND deleted='0' ORDER BY frais_divers_id DESC";
         $requestfrais = $database_connect->query($queryfrais);
         while($response_array_frais = $requestfrais->fetchObject()) {
             

@@ -32,6 +32,7 @@
     $pupils_count_female = 0;
     $pupils_marks = array();
     $main_total_montant = 0;
+    $paiement_categories = array();
 
     $annee = $_POST['annee'];
 
@@ -83,6 +84,34 @@
     //         $abandon = $abandon + 1;
     //     }
     // }
+
+    $query_countc = "SELECT school_year, COUNT(*) AS count_paiement_categories FROM paiement_categories WHERE school_year=?";
+	$request_countc = $database_connect->prepare($query_countc);
+	$request_countc->execute(array($annee));
+	$response_countc = $request_countc->fetchObject();
+
+	if ($response_countc->count_paiement_categories != 0) {
+		$querypc = "SELECT * FROM paiement_categories WHERE school_year=?";
+        $requestpc = $database_connect->prepare($querypc);
+        $requestpc->execute(array($annee));
+        while($response_categories = $requestpc->fetchObject()) {
+            array_push($paiement_categories, $response_categories);
+        }
+	}
+
+    $query_countl = "SELECT school_year, COUNT(*) AS count_libelles FROM libelles WHERE school_year=?";
+	$request_countl = $database_connect->prepare($query_countl);
+	$request_countl->execute(array($annee));
+	$response_countl = $request_countl->fetchObject();
+
+	if ($response_countl->count_libelles != 0) {
+		$queryl = "SELECT * FROM libelles WHERE school_year=?";
+        $requestl = $database_connect->prepare($queryl);
+        $requestl->execute(array($annee));
+        while($response_libelles = $requestl->fetchObject()) {
+            array_push($libelles, $response_libelles);
+        }
+	}
 
     $sieq = "SELECT school_year, COUNT(*) AS base_school_infos_exists FROM base_school_info WHERE school_year='$annee'";
     $siereq = $database_connect->query($sieq);
@@ -160,12 +189,6 @@
     $requestorders = $database_connect->query($queryorders);
     while($response_array_orders = $requestorders->fetchObject()) {
         array_push($orders, $response_array_orders);
-    }
-
-    $querylibelles = "SELECT * FROM libelles";
-    $requestlibelles = $database_connect->query($querylibelles);
-    while($response_array_libelles = $requestlibelles->fetchObject()) {
-        array_push($libelles, $response_array_libelles);
     }
 
     $querysections = "SELECT * FROM sections";
@@ -370,6 +393,7 @@
             $soldes_paiements['montant_paye'] = $montants_payes;
                 
             $pupil['pupil'] = $response_pupils_class;
+            $pupil['pupil_id'] = $response_pupils_class->pupil_id;
             $pupil['paiements'] = $paiements;
             $pupil['frais_divers'] = $frais_divers;
             $pupil['soldes'] = $soldes_paiements;
@@ -411,6 +435,7 @@
     $response['echecs'] = $echecs;
     $response['abandon'] = $abandon;
     $response['libelles'] = $libelles;
+    $response['paiement_categories'] = $paiement_categories;
     echo json_encode($response);
 
 ?>

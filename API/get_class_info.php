@@ -218,6 +218,7 @@
             }
 
             $pupil['pupil'] = $response;
+            $pupil['pupil_id'] = $response->pupil_id;
             $pupil['marks'] = $pupil_marks;
             $pupil['conduites'] = $pupil_conduite;
             $pupil['paiements'] = $pupil_paiements;

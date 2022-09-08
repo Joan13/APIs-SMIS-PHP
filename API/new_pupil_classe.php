@@ -36,11 +36,12 @@
 	$perm_number = htmlspecialchars(strip_tags(trim($_POST['perm_number'])));
 	$nat = htmlspecialchars(strip_tags(trim($_POST['nationality'])));
 	$statut_scolaire = htmlspecialchars(strip_tags(trim($_POST['statut_scolaire'])));
+	$paiement_category = htmlspecialchars(strip_tags(trim($_POST['paiement_category'])));
 
 
 	$classes_alignment = "$cycle_school_pupil $class_school_pupil $class_order_pupil $class_section_pupil $class_option_pupil $school_year_pupil";
 
-	insert_pupil($first_name_pupil, $second_name_pupil, $last_name_pupil, $gender_pupil, $birth_date_pupil, $birth_place_pupil, $father_name, $mother_name, $parents_alive, $parents_state, $father_work_pupil, $mother_work_pupil, $lives_with, $cycle_school_pupil, $class_school_pupil, $class_order_pupil, $class_section_pupil, $class_option_pupil, $school_year_pupil, $email_address_pupil, $physical_address_pupil, $contact_1_pupil, $contact_2_pupil, $contact_3_pupil, $contact_4_pupil, randomUserId(10), $id_number, $perm_number, $nat, $statut_scolaire);
+	insert_pupil($first_name_pupil, $second_name_pupil, $last_name_pupil, $gender_pupil, $birth_date_pupil, $birth_place_pupil, $father_name, $mother_name, $parents_alive, $parents_state, $father_work_pupil, $mother_work_pupil, $lives_with, $cycle_school_pupil, $class_school_pupil, $class_order_pupil, $class_section_pupil, $class_option_pupil, $school_year_pupil, $email_address_pupil, $physical_address_pupil, $contact_1_pupil, $contact_2_pupil, $contact_3_pupil, $contact_4_pupil, randomUserId(10), $id_number, $perm_number, $nat, $statut_scolaire, $paiement_category);
 	// insert_class_completed($cycle_school_pupil, $class_school_pupil, $class_order_pupil, $class_section_pupil, $class_option_pupil, $school_year_pupil, $classes_alignment);
 
 	// $qq00 = "SELECT pupil_id, first_name, second_name, last_name, gender, father_names, mother_names FROM pupils_info WHERE first_name=? AND second_name=? AND gender=? AND father_names=? AND mother_names=?";

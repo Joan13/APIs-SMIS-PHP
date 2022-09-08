@@ -3,7 +3,7 @@
 	$dbhost = 'localhost';
 	$dbname = 'school_administration';
 	$dbuser = 'root';
-	$dbpassword = 'root';
+	$dbpassword = '';
 
 	// $dbhost = '185.98.131.158';
 	// $dbname = 'cseli1701093';
@@ -99,6 +99,17 @@
 	// $phone_1 = "+243 971 776 858";
 	// $phone_2 = "+243 819 009 678";
 
+	$school_name = "Collège Alfajiri";
+	$school_name_abb = "Collège Alfajri";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P. 1612 - BUKAVU";
+	$email_school = "c.stella@jesuits.net";
+	$school_city = "Bukavu";
+	$school_province = "Sud-Kivu";
+	$school_commune = "Ibanda";
+	$phone_1 = "+243 997 127 688";
+	$phone_2 = "+243 977 271 146";
+
 	// $school_name = "Lycée Wima";
 	// // $school_name_abb = "Masomo";
 	// $school_name_abb = "Lycée Wima";
@@ -111,17 +122,17 @@
 	// $phone_1 = "+243 994 108 986";
 	// $phone_2 = "+243 971 995 370";
 
-	$school_name = "Complexe Scolaire \"Les Progrès\"";
-	// $school_name_abb = "Masomo";
-	$school_name_abb = "C. S. Les Progrès";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P. - BUKAVU";
-	$email_school = "cs.lesprogres@gmail.com";
-	$school_city = "Bukavu";
-	$school_province = "Sud-Kivu";
-	$school_commune = "Ibanda";
-	$phone_1 = "+243 994 108 986";
-	$phone_2 = "+243 971 995 370";
+	// $school_name = "Complexe Scolaire \"Les Progrès\"";
+	// // $school_name_abb = "Masomo";
+	// $school_name_abb = "C. S. Les Progrès";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. - BUKAVU";
+	// $email_school = "cs.lesprogres@gmail.com";
+	// $school_city = "Bukavu";
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 994 108 986";
+	// $phone_2 = "+243 971 995 370";
 
 	// $school_name = "Collège Saint-Paul";
 	// $school_name_abb = "Collège Saint-Paul";
