@@ -13,4 +13,6 @@ header("Access-Control-Allow-Origin: *");
     $edit = $database_connect->prepare($edit0);
     $edit->execute(array($paiement_validated, $frais_divers_id));
 
+    echo json_encode("1");
+
   ?>

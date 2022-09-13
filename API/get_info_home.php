@@ -85,6 +85,10 @@
     //     }
     // }
 
+    $categories_query = "SELECT * FROM paiement_categories WHERE school_year='$annee'";
+    $categories_request = $database_connect->query($categories_query);
+    $categories_response = $categories_request->fetchObject();
+
     $query_countc = "SELECT school_year, COUNT(*) AS count_paiement_categories FROM paiement_categories WHERE school_year=?";
 	$request_countc = $database_connect->prepare($query_countc);
 	$request_countc->execute(array($annee));
@@ -285,106 +289,111 @@
                 $pupils_count_female = $pupils_count_female + 1;
             }
 
+            if($response_pupils_class->paiement_category == '') {
+                $modify_query = "UPDATE pupils_info SET paiement_category='$categories_response->category_id' WHERE pupil_id='$response_pupils_class->pupil_id'";
+                $modify_request = $database_connect->query($modify_query);
+            }
+
             // $querymarks = "SELECT * FROM marks_info WHERE pupil='$pupil_id'";
             // $requestmarks = $database_connect->query($querymarks);
             // while($response_array_marks = $requestmarks->fetchObject()) {
             //     array_push($marks, $response_array_marks);
             // }
 
-            $querypaiements = "SELECT * FROM paiements WHERE pupil_id='$pupil_id' ORDER BY paiement_id DESC";
-            $requestpaiements = $database_connect->query($querypaiements);
-            while($response_array_paiements = $requestpaiements->fetchObject()) {
+            // $querypaiements = "SELECT * FROM paiements WHERE pupil_id='$pupil_id' ORDER BY paiement_id DESC";
+            // $requestpaiements = $database_connect->query($querypaiements);
+            // while($response_array_paiements = $requestpaiements->fetchObject()) {
 
-                if ($response_array_paiements->paiement_validated == 1) {
-                    $montants_payes = $montants_payes + $response_array_paiements->montant_paye;
-                    $payess = $payess + $response_array_paiements->montant_paye;
-                    if ($response_array_paiements->total_montant != 0) {
-                        $montant_total = $response_array_paiements->total_montant;
-                        $main_total_montant = $response_array_paiements->total_montant;
-                    } else {
-                        $montant_total = $main_total_montant;
-                    }
-                }
+            //     if ($response_array_paiements->paiement_validated == 1) {
+            //         $montants_payes = $montants_payes + $response_array_paiements->montant_paye;
+            //         $payess = $payess + $response_array_paiements->montant_paye;
+            //         if ($response_array_paiements->total_montant != 0) {
+            //             $montant_total = $response_array_paiements->total_montant;
+            //             $main_total_montant = $response_array_paiements->total_montant;
+            //         } else {
+            //             $montant_total = $main_total_montant;
+            //         }
+            //     }
                 
-                array_push($paiements, $response_array_paiements);
-            }
+            //     array_push($paiements, $response_array_paiements);
+            // }
 
-            $queryfrais = "SELECT * FROM frais_divers WHERE pupil_id='$pupil_id' ORDER BY frais_divers_id DESC";
-            $requestfrais = $database_connect->query($queryfrais);
-            while($response_array_frais = $requestfrais->fetchObject()) {
+            // $queryfrais = "SELECT * FROM frais_divers WHERE pupil_id='$pupil_id' ORDER BY frais_divers_id DESC";
+            // $requestfrais = $database_connect->query($queryfrais);
+            // while($response_array_frais = $requestfrais->fetchObject()) {
                 
-                array_push($frais_divers, $response_array_frais);
-            }
+            //     array_push($frais_divers, $response_array_frais);
+            // }
 
-				if($montant_total !== 0) {
-                    $s1 = $montant_total/3;
-                } else {
-                    $s1 = $main_total_montant/3;
-                }
+			// 	if($montant_total !== 0) {
+            //         $s1 = $montant_total/3;
+            //     } else {
+            //         $s1 = $main_total_montant/3;
+            //     }
 
-				$s2 = $s1 + $s1;
-				$s3 = $s2 + $s1;
+			// 	$s2 = $s1 + $s1;
+			// 	$s3 = $s2 + $s1;
 
-                $montant = $montants_payes;
-                if($montant != 0)
-                {
-                    if($montant <= $s1)
-                    {
-                        if($montant == $s1)
-                        {
-                            $message_soldes_t1 = "OK";
-                            $message_soldes_t2 = $s1;
-                            $message_soldes_t3 = $s1;
-                        }
-                        else
-                        {
-                            $tr1 = $s1-$montant;
-                            $message_soldes_t1 = "$tr1";
-                            $message_soldes_t2 = $s1;
-                            $message_soldes_t3 = $s1;
-                        }
-                    }
+            //     $montant = $montants_payes;
+            //     if($montant != 0)
+            //     {
+            //         if($montant <= $s1)
+            //         {
+            //             if($montant == $s1)
+            //             {
+            //                 $message_soldes_t1 = "OK";
+            //                 $message_soldes_t2 = $s1;
+            //                 $message_soldes_t3 = $s1;
+            //             }
+            //             else
+            //             {
+            //                 $tr1 = $s1-$montant;
+            //                 $message_soldes_t1 = "$tr1";
+            //                 $message_soldes_t2 = $s1;
+            //                 $message_soldes_t3 = $s1;
+            //             }
+            //         }
 
-                    if($montant > $s1 && $montant <= $s2)
-                    {
-                        if($montant == $s2)
-                        {
-                            $message_soldes_t1 = "OK";
-                            $message_soldes_t2 = "OK";
-                            $message_soldes_t3 = $s1;
-                        }
-                        else
-                        {
-                            $tr2 = $s2-$montant;
-                            $message_soldes_t1 = "OK";
-                            $message_soldes_t2 = "$tr2";
-                            $message_soldes_t3 = $s1;
-                        }
-                    }
+            //         if($montant > $s1 && $montant <= $s2)
+            //         {
+            //             if($montant == $s2)
+            //             {
+            //                 $message_soldes_t1 = "OK";
+            //                 $message_soldes_t2 = "OK";
+            //                 $message_soldes_t3 = $s1;
+            //             }
+            //             else
+            //             {
+            //                 $tr2 = $s2-$montant;
+            //                 $message_soldes_t1 = "OK";
+            //                 $message_soldes_t2 = "$tr2";
+            //                 $message_soldes_t3 = $s1;
+            //             }
+            //         }
 
-                    if($montant > $s2)
-                    {
-                        if($montant == $s3)
-                        {
-                            $message_soldes_t1 = "OK";
-                            $message_soldes_t2 = "OK";
-                            $message_soldes_t3 = "OK";
-                        }
-                        else
-                        {
-                            $tr3 = $s3-$montant;
-                            $message_soldes_t1 = "OK";
-                            $message_soldes_t2 = "OK";
-                            $message_soldes_t3 = "$tr3";
-                        }
-                    }
-                }
-                else
-                {
-                    $message_soldes_t1 = $s1;
-                    $message_soldes_t2 = $s1;
-                    $message_soldes_t3 = $s1;
-                }
+            //         if($montant > $s2)
+            //         {
+            //             if($montant == $s3)
+            //             {
+            //                 $message_soldes_t1 = "OK";
+            //                 $message_soldes_t2 = "OK";
+            //                 $message_soldes_t3 = "OK";
+            //             }
+            //             else
+            //             {
+            //                 $tr3 = $s3-$montant;
+            //                 $message_soldes_t1 = "OK";
+            //                 $message_soldes_t2 = "OK";
+            //                 $message_soldes_t3 = "$tr3";
+            //             }
+            //         }
+            //     }
+            //     else
+            //     {
+            //         $message_soldes_t1 = $s1;
+            //         $message_soldes_t2 = $s1;
+            //         $message_soldes_t3 = $s1;
+            //     }
 
             $soldes_paiements['solde'] = $montant_total-$montants_payes;
             $soldes_paiements['solde1'] = $message_soldes_t1;

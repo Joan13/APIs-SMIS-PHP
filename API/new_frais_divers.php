@@ -16,27 +16,142 @@
     $school_year = htmlspecialchars(trim(strip_tags($_POST['school_year'])));
     $pupil_id = htmlspecialchars(trim(strip_tags($_POST['pupil_id'])));
 
-    // $find_child0 = "SELECT * FROM input_output ORDER BY id DESC LIMIT 0, 1";
-    // $find_child_1 = $database_connect->query($find_child0);
-    // $find_child = $find_child_1->fetchObject();
-
-    // if($operation == 0)
-    // {
-    //     $intermediate = $nombre*$cout;
-    //     $solde = $find_child->solde-$intermediate;
-    // } 
-    // else
-    // {
-    //     $intermediate = $nombre*$cout;
-    //     $solde = $find_child->solde+$intermediate;
-    // }
-
+    $response = array();
+    $pupil = array();
+    $marks = array();
+    $paiements = array();
+    $frais_divers = array();
+    $soldes_paiements = array();
+    $montants_payes = 0;
+    $montant_total = 0;
+    $message_soldes_t1 = 0;
+    $message_soldes_t2 = 0;
+    $message_soldes_t3 = 0;
+    $main_total_montant = 0;
 
     $queryInsertFraisDivers = "INSERT INTO frais_divers(pupil_id, libelle, montant, school_year, date_entry, visible_print, deleted) 
     VALUES(?, ?, ?, ?, ?, ?, ?)";
     $requestInsertFraisDivers = $database_connect->prepare($queryInsertFraisDivers);
     $requestInsertFraisDivers->execute(array($pupil_id, $libelle, $montant, $school_year, $date, 1, 0));
 
-    echo json_encode("1");
+    $query_pupils_class = "SELECT * FROM pupils_info WHERE pupil_id='$pupil_id'";
+    $request_pupils_class = $database_connect->query($query_pupils_class);
+    while($response_pupils_class = $request_pupils_class->fetchObject()) {
+
+        $querymarks = "SELECT * FROM marks_info WHERE pupil='$pupil_id'";
+        $requestmarks = $database_connect->query($querymarks);
+        while($response_array_marks = $requestmarks->fetchObject()) {
+            array_push($marks, $response_array_marks);
+        }
+
+        $querypaiements = "SELECT * FROM paiements WHERE pupil_id='$pupil_id' ORDER BY paiement_id DESC";
+        $requestpaiements = $database_connect->query($querypaiements);
+        while($response_array_paiements = $requestpaiements->fetchObject()) {
+
+            if ($response_array_paiements->paiement_validated == 1) {
+                $montants_payes = $montants_payes + $response_array_paiements->montant_paye;
+                if ($response_array_paiements->total_montant != 0) {
+                    $montant_total = $response_array_paiements->total_montant;
+                    $main_total_montant = $response_array_paiements->total_montant;
+                } else {
+                    $montant_total = $main_total_montant;
+                }
+            }
+            
+            array_push($paiements, $response_array_paiements);
+        }
+
+        $queryfrais = "SELECT * FROM frais_divers WHERE pupil_id='$pupil_id' AND deleted='0' ORDER BY frais_divers_id DESC";
+        $requestfrais = $database_connect->query($queryfrais);
+        while($response_array_frais = $requestfrais->fetchObject()) {
+            
+            array_push($frais_divers, $response_array_frais);
+        }
+
+            if($montant_total !== 0) {
+                $s1 = $montant_total/3;
+            } else {
+                $s1 = $main_total_montant/3;
+            }
+
+            $s2 = $s1 + $s1;
+            $s3 = $s2 + $s1;
+
+            $montant = $montants_payes;
+            if($montant != 0)
+            {
+                if($montant <= $s1)
+                {
+                    if($montant == $s1)
+                    {
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = $s1;
+                        $message_soldes_t3 = $s1;
+                    }
+                    else
+                    {
+                        $tr1 = $s1-$montant;
+                        $message_soldes_t1 = "$tr1";
+                        $message_soldes_t2 = $s1;
+                        $message_soldes_t3 = $s1;
+                    }
+                }
+
+                if($montant > $s1 && $montant <= $s2)
+                {
+                    if($montant == $s2)
+                    {
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "0";
+                        $message_soldes_t3 = $s1;
+                    }
+                    else
+                    {
+                        $tr2 = $s2-$montant;
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "$tr2";
+                        $message_soldes_t3 = $s1;
+                    }
+                }
+
+                if($montant > $s2)
+                {
+                    if($montant == $s3)
+                    {
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "0";
+                        $message_soldes_t3 = "0";
+                    }
+                    else
+                    {
+                        $tr3 = $s3-$montant;
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "0";
+                        $message_soldes_t3 = "$tr3";
+                    }
+                }
+            }
+            else
+            {
+                $message_soldes_t1 = $s1;
+                $message_soldes_t2 = $s1;
+                $message_soldes_t3 = $s1;
+            }
+
+        $soldes_paiements['solde'] = $montant_total-$montants_payes;
+        $soldes_paiements['solde1'] = $message_soldes_t1;
+        $soldes_paiements['solde2'] = $message_soldes_t2;
+        $soldes_paiements['solde3'] = $message_soldes_t3;
+            
+        $pupil['pupil'] = $response_pupils_class;
+        $pupil['paiements'] = $paiements;
+        $pupil['frais_divers'] = $frais_divers;
+        $pupil['soldes'] = $soldes_paiements;
+        $pupil['marks'] = $marks;
+    }
+
+    $response['success'] = "1";
+    $response['pupil'] = $pupil;
+    echo json_encode($response);
 
 ?>

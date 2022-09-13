@@ -3,7 +3,7 @@
 	$dbhost = 'localhost';
 	$dbname = 'school_administration';
 	$dbuser = 'root';
-	$dbpassword = '';
+	$dbpassword = 'root';
 
 	// $dbhost = '185.98.131.158';
 	// $dbname = 'cseli1701093';
