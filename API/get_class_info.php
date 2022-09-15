@@ -22,6 +22,8 @@
     $pupils_count = 0;
     $domains = array();
     $sub_domains = array();
+    $ttotal = 0;
+    $ppayed = 0;
     
     // $school_year = 1;//htmlspecialchars(trim(strip_tags($_POST["school_year"])));
     // $cycle_id = 1;//htmlspecialchars(trim(strip_tags($_POST["cycle_id"])));
@@ -108,79 +110,176 @@
         $query = "SELECT * FROM pupils_info WHERE school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
         $request = $database_connect->prepare($query);
         $request->execute(array($school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id));
-        while($response = $request->fetchObject()) {
-            $first_pupil = $response->pupil_id;
+        while($response_pupil = $request->fetchObject()) {
+            $first_pupil = $response_pupil->pupil_id;
             $pupil = array();
             $pupil_marks = array();
             $pupil_conduite = array();
             $pupil_paiements = array();
+            $montant_total = 0;
+            $montants_payes = 0;
+            $main_total_montant = 0;
+            $soldes_paiements = array();
 
             $pupils_count = $pupils_count + 1;
 
-            // if (in_array(find_pupil_sum_main_marks($response->pupil_id, 1, $response->school_year), $array_places_1)) {
-            //     array_push($array_places_1, find_pupil_sum_main_marks($response->pupil_id, 1, $response->school_year) + 1);
+            if($response_pupil->paiement_category != '0') {
+                $category_query = "SELECT * FROM paiement_categories WHERE category_id='$response_pupil->paiement_category' AND school_year='$school_year'";
+                $category_request = $database_connect->query($category_query);
+                $category_response = $category_request->fetchObject();
+    
+                $montant_total = $category_response->category_amount;
+                $ttotal = $ttotal + $category_response->category_amount;
+                $main_total_montant = $category_response->category_amount;
+                // $ttrims = $ttrims + $category_response->category_amount / 3;
+            }
+
+            $querypaiements = "SELECT * FROM paiements WHERE pupil_id='$response_pupil->pupil_id' AND paiement_validated='1' ORDER BY paiement_id DESC";
+            $requestpaiements = $database_connect->query($querypaiements);
+            while($response_array_paiements = $requestpaiements->fetchObject()) {
+                $montants_payes = $montants_payes + $response_array_paiements->montant_paye;
+                $ppayed = $ppayed + $response_array_paiements->montant_paye;
+            }
+
+            if($montant_total !== 0) {
+                $s1 = $montant_total/3;
+            } else {
+                $s1 = $main_total_montant/3;
+            }
+
+            $s2 = $s1 + $s1;
+            $s3 = $s2 + $s1;
+
+            $montant = $montants_payes;
+            if($montant != 0)
+            {
+                if($montant <= $s1)
+                {
+                    if($montant == $s1)
+                    {
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = $s1;
+                        $message_soldes_t3 = $s1;
+                    }
+                    else
+                    {
+                        $tr1 = $s1-$montant;
+                        $message_soldes_t1 = "$tr1";
+                        $message_soldes_t2 = $s1;
+                        $message_soldes_t3 = $s1;
+                    }
+                }
+
+                if($montant > $s1 && $montant <= $s2)
+                {
+                    if($montant == $s2)
+                    {
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "0";
+                        $message_soldes_t3 = $s1;
+                    }
+                    else
+                    {
+                        $tr2 = $s2-$montant;
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "$tr2";
+                        $message_soldes_t3 = $s1;
+                    }
+                }
+
+                if($montant > $s2)
+                {
+                    if($montant == $s3)
+                    {
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "0";
+                        $message_soldes_t3 = "0";
+                    }
+                    else
+                    {
+                        $tr3 = $s3-$montant;
+                        $message_soldes_t1 = "0";
+                        $message_soldes_t2 = "0";
+                        $message_soldes_t3 = "$tr3";
+                    }
+                }
+            }
+            else
+            {
+                $message_soldes_t1 = $s1;
+                $message_soldes_t2 = $s1;
+                $message_soldes_t3 = $s1;
+            }
+
+            $soldes_paiements['solde'] = $montant_total-$montants_payes;
+            $soldes_paiements['solde1'] = $message_soldes_t1;
+            $soldes_paiements['solde2'] = $message_soldes_t2;
+            $soldes_paiements['solde3'] = $message_soldes_t3;
+
+            // if (in_array(find_pupil_sum_main_marks($response_pupil->pupil_id, 1, $response_pupil->school_year), $array_places_1)) {
+            //     array_push($array_places_1, find_pupil_sum_main_marks($response_pupil->pupil_id, 1, $response_pupil->school_year) + 1);
             // } else {
-                $arrayy1 = array();
-                $arrayy1['marks_found'] = find_pupil_sum_main_marks($response->pupil_id, 1, $response->school_year);
-                $arrayy1['pupil_id'] = $response->pupil_id;
-                array_push($array_places_1, $arrayy1);
+            $arrayy1 = array();
+            $arrayy1['marks_found'] = find_pupil_sum_main_marks($response_pupil->pupil_id, 1, $response_pupil->school_year);
+            $arrayy1['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_1, $arrayy1);
 
-                $arrayy2 = array();
-                $arrayy2['marks_found'] = find_pupil_sum_main_marks($response->pupil_id, 2, $response->school_year);
-                $arrayy2['pupil_id'] = $response->pupil_id;
-                array_push($array_places_2, $arrayy2);
+            $arrayy2 = array();
+            $arrayy2['marks_found'] = find_pupil_sum_main_marks($response_pupil->pupil_id, 2, $response_pupil->school_year);
+            $arrayy2['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_2, $arrayy2);
 
-                $arrayy10 = array();
-                $arrayy10['marks_found'] = find_pupil_sum_main_marks($response->pupil_id, 10, $response->school_year);
-                $arrayy10['pupil_id'] = $response->pupil_id;
-                array_push($array_places_10, $arrayy10);
+            $arrayy10 = array();
+            $arrayy10['marks_found'] = find_pupil_sum_main_marks($response_pupil->pupil_id, 10, $response_pupil->school_year);
+            $arrayy10['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_10, $arrayy10);
 
-                $arrayyTot1 = array();
-                $arrayyTot1['marks_found'] = find_pupil_sum_main_marks_sem_trim($response->pupil_id, 1, 2, 10, $response->school_year);
-                $arrayyTot1['pupil_id'] = $response->pupil_id;
-                array_push($array_places_tot1, $arrayyTot1);
+            $arrayyTot1 = array();
+            $arrayyTot1['marks_found'] = find_pupil_sum_main_marks_sem_trim($response_pupil->pupil_id, 1, 2, 10, $response_pupil->school_year);
+            $arrayyTot1['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_tot1, $arrayyTot1);
 
-                $arrayy3 = array();
-                $arrayy3['marks_found'] = find_pupil_sum_main_marks($response->pupil_id, 3, $response->school_year);
-                $arrayy3['pupil_id'] = $response->pupil_id;
-                array_push($array_places_3, $arrayy3);
+            $arrayy3 = array();
+            $arrayy3['marks_found'] = find_pupil_sum_main_marks($response_pupil->pupil_id, 3, $response_pupil->school_year);
+            $arrayy3['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_3, $arrayy3);
 
-                $arrayy4 = array();
-                $arrayy4['marks_found'] = find_pupil_sum_main_marks($response->pupil_id, 4, $response->school_year);
-                $arrayy4['pupil_id'] = $response->pupil_id;
-                array_push($array_places_4, $arrayy4);
+            $arrayy4 = array();
+            $arrayy4['marks_found'] = find_pupil_sum_main_marks($response_pupil->pupil_id, 4, $response_pupil->school_year);
+            $arrayy4['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_4, $arrayy4);
 
-                $arrayy11 = array();
-                $arrayy11['marks_found'] = find_pupil_sum_main_marks($response->pupil_id, 11, $response->school_year);
-                $arrayy11['pupil_id'] = $response->pupil_id;
-                array_push($array_places_11, $arrayy11);
+            $arrayy11 = array();
+            $arrayy11['marks_found'] = find_pupil_sum_main_marks($response_pupil->pupil_id, 11, $response_pupil->school_year);
+            $arrayy11['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_11, $arrayy11);
 
-                $arrayyTot2 = array();
-                $arrayyTot2['marks_found'] = find_pupil_sum_main_marks_sem_trim($response->pupil_id, 3, 4, 11, $response->school_year);
-                $arrayyTot2['pupil_id'] = $response->pupil_id;
-                array_push($array_places_tot2, $arrayyTot2);
+            $arrayyTot2 = array();
+            $arrayyTot2['marks_found'] = find_pupil_sum_main_marks_sem_trim($response_pupil->pupil_id, 3, 4, 11, $response_pupil->school_year);
+            $arrayyTot2['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_tot2, $arrayyTot2);
 
-                $arrayyTott = array();
-                $arrayyTott['marks_found'] = find_pupil_sum_main_marks_sem_trim($response->pupil_id, 3, 4, 11, $response->school_year) + find_pupil_sum_main_marks_sem_trim($response->pupil_id, 1, 2, 10, $response->school_year);
-                //find_pupil_total_marks($response->pupil_id, $response->school_year);
+            $arrayyTott = array();
+            $arrayyTott['marks_found'] = find_pupil_sum_main_marks_sem_trim($response_pupil->pupil_id, 3, 4, 11, $response_pupil->school_year) + find_pupil_sum_main_marks_sem_trim($response_pupil->pupil_id, 1, 2, 10, $response_pupil->school_year);
+            //find_pupil_total_marks($response_pupil->pupil_id, $response_pupil->school_year);
 
-                $arrayyTott['pupil_id'] = $response->pupil_id;
-                array_push($array_places_tott, $arrayyTott);
+            $arrayyTott['pupil_id'] = $response_pupil->pupil_id;
+            array_push($array_places_tott, $arrayyTott);
             // }
             
-            // array_push($array_places_2, find_pupil_sum_main_marks($response->pupil_id, 2, $response->school_year));
-            // array_push($array_places_10, find_pupil_sum_main_marks($response->pupil_id, 10, $response->school_year));
-            // array_push($array_places_tot1, find_pupil_sum_main_marks_sem_trim($response->pupil_id, 1, 2, 10, $response->school_year));
+            // array_push($array_places_2, find_pupil_sum_main_marks($response_pupil->pupil_id, 2, $response_pupil->school_year));
+            // array_push($array_places_10, find_pupil_sum_main_marks($response_pupil->pupil_id, 10, $response_pupil->school_year));
+            // array_push($array_places_tot1, find_pupil_sum_main_marks_sem_trim($response_pupil->pupil_id, 1, 2, 10, $response_pupil->school_year));
 
             $query_count_marks = "SELECT pupil, COUNT(*) AS count_marks_exist FROM marks_info WHERE pupil=?";
             $request_count_marks = $database_connect->prepare($query_count_marks);
-            $request_count_marks->execute(array($response->pupil_id));
+            $request_count_marks->execute(array($response_pupil->pupil_id));
             $response_count_marks = $request_count_marks->fetchObject();
 
             if ($response_count_marks->count_marks_exist != 0) {
                 $query_marks = "SELECT * FROM marks_info WHERE pupil=?";
                 $request_marks = $database_connect->prepare($query_marks);
-                $request_marks->execute(array($response->pupil_id));
+                $request_marks->execute(array($response_pupil->pupil_id));
                 while($response_marks = $request_marks->fetchObject()) {
                     // array_push($pupil_marks, $response_marks);
                     array_push($marks, $response_marks);
@@ -189,13 +288,13 @@
 
             $query_count_conseil = "SELECT pupil_id, COUNT(*) AS count_conseil_exist FROM conseil_deliberation WHERE pupil_id=?";
             $request_count_conseil = $database_connect->prepare($query_count_conseil);
-            $request_count_conseil->execute(array($response->pupil_id));
+            $request_count_conseil->execute(array($response_pupil->pupil_id));
             $response_count_conseil = $request_count_conseil->fetchObject();
 
             if ($response_count_conseil->count_conseil_exist != 0) {
                 $query_conseil = "SELECT * FROM conseil_deliberation WHERE pupil_id=?";
                 $request_conseil = $database_connect->prepare($query_conseil);
-                $request_conseil->execute(array($response->pupil_id));
+                $request_conseil->execute(array($response_pupil->pupil_id));
                 while($response_conseil = $request_conseil->fetchObject()) {
                     array_push($conseils, $response_conseil);
                 }
@@ -204,22 +303,23 @@
 
             $query_count_conduite = "SELECT pupil_id, COUNT(*) AS count_conduite_exists FROM conduite WHERE pupil_id=?";
             $request_count_conduite = $database_connect->prepare($query_count_conduite);
-            $request_count_conduite->execute(array($response->pupil_id));
+            $request_count_conduite->execute(array($response_pupil->pupil_id));
             $response_count_conduite = $request_count_conduite->fetchObject();
 
             if ($response_count_conduite->count_conduite_exists != 0) {
                 $query_conduite = "SELECT * FROM conduite WHERE pupil_id=?";
                 $request_conduite = $database_connect->prepare($query_conduite);
-                $request_conduite->execute(array($response->pupil_id));
+                $request_conduite->execute(array($response_pupil->pupil_id));
                 while($response_conduite = $request_conduite->fetchObject()) {
                     // array_push($pupil_conduite, $response_conduite);
                     array_push($conduites, $response_conduite);
                 }
             }
 
-            $pupil['pupil'] = $response;
-            $pupil['pupil_id'] = $response->pupil_id;
+            $pupil['pupil'] = $response_pupil;
+            $pupil['pupil_id'] = $response_pupil->pupil_id;
             $pupil['marks'] = $pupil_marks;
+            $pupil['soldes_paiements'] = $soldes_paiements;
             $pupil['conduites'] = $pupil_conduite;
             $pupil['paiements'] = $pupil_paiements;
             array_push($pupils, $pupil);
@@ -258,6 +358,8 @@
     $response['first_course'] = $first_course;
     $response['pupils_marks'] = $marks;
     $response['conseil_deliberation'] = $conseils;
+    $response['paye_paiements'] = $ppayed;
+    $response['total_paiements'] = $ttotal;
     
     echo json_encode($response);
 
