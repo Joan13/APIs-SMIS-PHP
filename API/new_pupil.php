@@ -38,7 +38,6 @@
 	$paiement_category = htmlspecialchars(strip_tags(trim($_POST['paiement_category'])));
 	$statut_scolaire = htmlspecialchars(strip_tags(trim($_POST['statut_scolaire'])));
 
-
 	$classes_alignment = "$cycle_school_pupil $class_school_pupil $class_order_pupil $class_section_pupil $class_option_pupil $school_year_pupil";
 
 	insert_pupil($first_name_pupil, $second_name_pupil, $last_name_pupil, $gender_pupil, $birth_date_pupil, $birth_place_pupil, $father_name, $mother_name, $parents_alive, $parents_state, $father_work_pupil, $mother_work_pupil, $lives_with, $cycle_school_pupil, $class_school_pupil, $class_order_pupil, $class_section_pupil, $class_option_pupil, $school_year_pupil, $email_address_pupil, $physical_address_pupil, $contact_1_pupil, $contact_2_pupil, $contact_3_pupil, $contact_4_pupil, randomUserId(10), $id_number, $perm_number, $nat, $statut_scolaire, $paiement_category);

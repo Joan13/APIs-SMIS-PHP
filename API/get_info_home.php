@@ -260,9 +260,9 @@
         $class['school_year'] = $query_fetch->school_year;
         $class['data'] = array();
 
-        $query_pupils_class = "SELECT * FROM pupils_info WHERE cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND school_year=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
+        $query_pupils_class = "SELECT * FROM pupils_info WHERE cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND school_year=? AND is_inactive=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
         $request_pupils_class = $database_connect->prepare($query_pupils_class);
-        $request_pupils_class->execute(array($query_fetch->cycle_id, $query_fetch->class_id, $query_fetch->order_id, $query_fetch->section_id, $query_fetch->option_id, $query_fetch->school_year));
+        $request_pupils_class->execute(array($query_fetch->cycle_id, $query_fetch->class_id, $query_fetch->order_id, $query_fetch->section_id, $query_fetch->option_id, $query_fetch->school_year,0));
         while($response_pupils_class = $request_pupils_class->fetchObject()) {
 
             $pupil = array();

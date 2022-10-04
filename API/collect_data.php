@@ -26,6 +26,9 @@
     $abandon = 0;
     $paiements = array();
     $frais_divers = array();
+    $paiement_categories = array();
+    $classes_completed = array();
+    $libelles = array();
 
     $annee = $_POST['annee'];
 
@@ -96,60 +99,120 @@
         array_push($class_numbers, $response_array_classes);
     }
 
-        $query_paiements = "SELECT * FROM paiements WHERE school_year='$annee'";
-        $request_paiements = $database_connect->query($query_paiements);
-        while($response_array_paiments = $request_paiements->fetchObject()) {
-            $verify_query = "SELECT paiement_id, COUNT(*) AS count_paiement_exist FROM paiements WHERE paiement_id=?";
-            $verify_request = $database_connect_export->prepare($verify_query);
-            $verify_request->execute(array($response_array_paiments->paiement_id));
-            $verify_response = $verify_request->fetchObject();
-        
-            if ($verify_response->count_paiement_exist == 0) {
-                $insert_query = "INSERT INTO paiements(paiement_id, pupil_id, montant_paye, montant_text, libelle, total_montant, school_year, paiement_validated, date_creation)
-                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                $insert_request = $database_connect_export->prepare($insert_query);
-                $insert_request->execute(array($response_array_paiments->paiement_id, $response_array_paiments->pupil_id, $response_array_paiments->montant_paye, $response_array_paiments->montant_text, $response_array_paiments->libelle, $response_array_paiments->total_montant, $response_array_paiments->school_year, $response_array_paiments->paiement_validated, $response_array_paiments->date_creation));
+    $query_paiements = "SELECT * FROM paiements WHERE school_year='$annee'";
+    $request_paiements = $database_connect->query($query_paiements);
+    while($response_array_paiments = $request_paiements->fetchObject()) {
+        // $verify_query = "SELECT paiement_id, COUNT(*) AS count_paiement_exist FROM paiements WHERE paiement_id=?";
+        // $verify_request = $database_connect->prepare($verify_query);
+        // $verify_request->execute(array($response_array_paiments->paiement_id));
+        // $verify_response = $verify_request->fetchObject();
+    
+        // if ($verify_response->count_paiement_exist == 0) {
+        //     $insert_query = "INSERT INTO paiements(paiement_id, pupil_id, montant_paye, montant_text, libelle, total_montant, school_year, paiement_validated, date_creation)
+        //         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        //     // $insert_request = $database_connect_export->prepare($insert_query);
+        //     // $insert_request->execute(array($response_array_paiments->paiement_id, $response_array_paiments->pupil_id, $response_array_paiments->montant_paye, $response_array_paiments->montant_text, $response_array_paiments->libelle, $response_array_paiments->total_montant, $response_array_paiments->school_year, $response_array_paiments->paiement_validated, $response_array_paiments->date_creation));
 
-                array_push($paiements, $response_array_paiments);
-            }
+        //     array_push($paiements, $response_array_paiments);
+        // }
+        array_push($paiements, $response_array_paiments);
     }
 
 
     $query_frais_divers = "SELECT * FROM frais_divers WHERE school_year='$annee'";
     $request_frais_divers = $database_connect->query($query_frais_divers);
     while($response_array_frais_divers = $request_frais_divers->fetchObject()) {
-        $verify_query = "SELECT frais_divers_id, COUNT(*) AS count_paiement_exist FROM frais_divers WHERE frais_divers_id=?";
-        $verify_request = $database_connect_export->prepare($verify_query);
-        $verify_request->execute(array($response_array_frais_divers->frais_divers_id));
-        $verify_response = $verify_request->fetchObject();
+        // $verify_query = "SELECT frais_divers_id, COUNT(*) AS count_paiement_exist FROM frais_divers WHERE frais_divers_id=?";
+        // $verify_request = $database_connect->prepare($verify_query);
+        // $verify_request->execute(array($response_array_frais_divers->frais_divers_id));
+        // $verify_response = $verify_request->fetchObject();
 
-        if ($verify_response->count_paiement_exist == 0) {
-            $insert_query = "INSERT INTO frais_divers(frais_divers_id, pupil_id, libelle, montant, school_year, date_entry, deleted, visible_print)
-                    VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-            $insert_request = $database_connect_export->prepare($insert_query);
-            $insert_request->execute(array($response_array_frais_divers->frais_divers_id, $response_array_frais_divers->pupil_id, $response_array_frais_divers->libelle, $response_array_frais_divers->montant, $response_array_frais_divers->school_year, $response_array_frais_divers->date_entry, $response_array_frais_divers->deleted, $response_array_frais_divers->visible_print));
+        // if ($verify_response->count_paiement_exist == 0) {
+        //     $insert_query = "INSERT INTO frais_divers(frais_divers_id, pupil_id, libelle, montant, school_year, date_entry, deleted, visible_print)
+        //             VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        //     // $insert_request = $database_connect_export->prepare($insert_query);
+        //     // $insert_request->execute(array($response_array_frais_divers->frais_divers_id, $response_array_frais_divers->pupil_id, $response_array_frais_divers->libelle, $response_array_frais_divers->montant, $response_array_frais_divers->school_year, $response_array_frais_divers->date_entry, $response_array_frais_divers->deleted, $response_array_frais_divers->visible_print));
 
-            array_push($frais_divers, $response_array_frais_divers);
-        }
+        //     array_push($frais_divers, $response_array_frais_divers);
+        // }
+        array_push($frais_divers, $response_array_frais_divers);
+    }
+
+    $query_paiement_categories = "SELECT * FROM paiement_categories WHERE school_year='$annee'";
+    $request_paiement_categories = $database_connect->query($query_paiement_categories);
+    while($response_array_paiement_categories = $request_paiement_categories->fetchObject()) {
+        // $verify_query = "SELECT paiement_id, COUNT(*) AS count_paiement_exist FROM paiements WHERE paiement_id=?";
+        // $verify_request = $database_connect->prepare($verify_query);
+        // $verify_request->execute(array($response_array_paiments->paiement_id));
+        // $verify_response = $verify_request->fetchObject();
+    
+        // if ($verify_response->count_paiement_exist == 0) {
+        //     $insert_query = "INSERT INTO paiements(paiement_id, pupil_id, montant_paye, montant_text, libelle, total_montant, school_year, paiement_validated, date_creation)
+        //         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        //     // $insert_request = $database_connect_export->prepare($insert_query);
+        //     // $insert_request->execute(array($response_array_paiments->paiement_id, $response_array_paiments->pupil_id, $response_array_paiments->montant_paye, $response_array_paiments->montant_text, $response_array_paiments->libelle, $response_array_paiments->total_montant, $response_array_paiments->school_year, $response_array_paiments->paiement_validated, $response_array_paiments->date_creation));
+
+        //     array_push($paiements, $response_array_paiments);
+        // }
+        array_push($paiement_categories, $response_array_paiement_categories);
+    }
+
+    $query_classes_completed = "SELECT * FROM classes_completed WHERE school_year='$annee'";
+    $request_classes_completed = $database_connect->query($query_classes_completed);
+    while($response_array_classes_completed = $request_classes_completed->fetchObject()) {
+        // $verify_query = "SELECT paiement_id, COUNT(*) AS count_paiement_exist FROM paiements WHERE paiement_id=?";
+        // $verify_request = $database_connect->prepare($verify_query);
+        // $verify_request->execute(array($response_array_paiments->paiement_id));
+        // $verify_response = $verify_request->fetchObject();
+    
+        // if ($verify_response->count_paiement_exist == 0) {
+        //     $insert_query = "INSERT INTO paiements(paiement_id, pupil_id, montant_paye, montant_text, libelle, total_montant, school_year, paiement_validated, date_creation)
+        //         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        //     // $insert_request = $database_connect_export->prepare($insert_query);
+        //     // $insert_request->execute(array($response_array_paiments->paiement_id, $response_array_paiments->pupil_id, $response_array_paiments->montant_paye, $response_array_paiments->montant_text, $response_array_paiments->libelle, $response_array_paiments->total_montant, $response_array_paiments->school_year, $response_array_paiments->paiement_validated, $response_array_paiments->date_creation));
+
+        //     array_push($paiements, $response_array_paiments);
+        // }
+        array_push($classes_completed, $response_array_paiement_categories);
     }
 
     
     $querypupils = "SELECT * FROM pupils_info WHERE school_year='$annee'";
     $requestpupils = $database_connect->query($querypupils);
     while($response_array_pupils = $requestpupils->fetchObject()) {
-        $verify_query = "SELECT pupil_id, COUNT(*) AS count_pupil_exist FROM pupils_info WHERE pupil_id=?";
-        $verify_request = $database_connect_export->prepare($verify_query);
-        $verify_request->execute(array($response_array_pupils->pupil_id));
-        $verify_response = $verify_request->fetchObject();
+        // $verify_query = "SELECT pupil_id, COUNT(*) AS count_pupil_exist FROM pupils_info WHERE pupil_id=?";
+        // $verify_request = $database_connect_export->prepare($verify_query);
+        // $verify_request->execute(array($response_array_pupils->pupil_id));
+        // $verify_response = $verify_request->fetchObject();
 
-        if ($verify_response->count_pupil_exist == 0) {
-            $classes_alignment = $response_array_pupils->cycle_school ." ". $response_array_pupils->class_school ." ". $response_array_pupils->class_order ." ". $response_array_pupils->class_section ." ". $response_array_pupils->class_option ." ". $response_array_pupils->school_year;
+        // if ($verify_response->count_pupil_exist == 0) {
+        //     $classes_alignment = $response_array_pupils->cycle_school ." ". $response_array_pupils->class_school ." ". $response_array_pupils->class_order ." ". $response_array_pupils->class_section ." ". $response_array_pupils->class_option ." ". $response_array_pupils->school_year;
 
-            insert_pupil_export($response_array_pupils->pupil_id,$response_array_pupils->first_name, $response_array_pupils->second_name, $response_array_pupils->last_name, $response_array_pupils->gender, $response_array_pupils->birth_date, $response_array_pupils->birth_place, $response_array_pupils->father_names, $response_array_pupils->mother_names, $response_array_pupils->parents_alive, $response_array_pupils->parents_state, $response_array_pupils->father_principal_work, $response_array_pupils->mother_principal_work, $response_array_pupils->lives_with, $response_array_pupils->cycle_school, $response_array_pupils->class_school, $response_array_pupils->class_order, $response_array_pupils->class_section, $response_array_pupils->class_option, $response_array_pupils->school_year, $response_array_pupils->email_address, $response_array_pupils->physical_address, $response_array_pupils->contact_phone_1, $response_array_pupils->contact_phone_2, $response_array_pupils->contact_phone_3, $response_array_pupils->contact_phone_4, randomUserId(10), $response_array_pupils->identification_number, $response_array_pupils->permanent_number, $response_array_pupils->nationality, $response_array_pupils->statut_scolaire);
-            insert_class_completed_export($response_array_pupils->cycle_school, $response_array_pupils->class_school, $response_array_pupils->class_order, $response_array_pupils->class_section, $response_array_pupils->class_option, $response_array_pupils->school_year, $classes_alignment);
+        //     // insert_pupil_export($response_array_pupils->pupil_id,$response_array_pupils->first_name, $response_array_pupils->second_name, $response_array_pupils->last_name, $response_array_pupils->gender, $response_array_pupils->birth_date, $response_array_pupils->birth_place, $response_array_pupils->father_names, $response_array_pupils->mother_names, $response_array_pupils->parents_alive, $response_array_pupils->parents_state, $response_array_pupils->father_principal_work, $response_array_pupils->mother_principal_work, $response_array_pupils->lives_with, $response_array_pupils->cycle_school, $response_array_pupils->class_school, $response_array_pupils->class_order, $response_array_pupils->class_section, $response_array_pupils->class_option, $response_array_pupils->school_year, $response_array_pupils->email_address, $response_array_pupils->physical_address, $response_array_pupils->contact_phone_1, $response_array_pupils->contact_phone_2, $response_array_pupils->contact_phone_3, $response_array_pupils->contact_phone_4, randomUserId(10), $response_array_pupils->identification_number, $response_array_pupils->permanent_number, $response_array_pupils->nationality, $response_array_pupils->statut_scolaire);
+        //     // insert_class_completed_export($response_array_pupils->cycle_school, $response_array_pupils->class_school, $response_array_pupils->class_order, $response_array_pupils->class_section, $response_array_pupils->class_option, $response_array_pupils->school_year, $classes_alignment);
             
-            array_push($pupils, $response_array_pupils);
-        }
+        //     array_push($pupils, $response_array_pupils);
+        // }
+        array_push($pupils, $response_array_pupils);
+    }
+
+    $querylibelles = "SELECT * FROM libelles WHERE school_year='$annee'";
+    $requestlibelles = $database_connect->query($querylibelles);
+    while($response_array_libelles = $requestlibelles->fetchObject()) {
+        // $verify_query = "SELECT pupil_id, COUNT(*) AS count_pupil_exist FROM pupils_info WHERE pupil_id=?";
+        // $verify_request = $database_connect_export->prepare($verify_query);
+        // $verify_request->execute(array($response_array_pupils->pupil_id));
+        // $verify_response = $verify_request->fetchObject();
+
+        // if ($verify_response->count_pupil_exist == 0) {
+        //     $classes_alignment = $response_array_pupils->cycle_school ." ". $response_array_pupils->class_school ." ". $response_array_pupils->class_order ." ". $response_array_pupils->class_section ." ". $response_array_pupils->class_option ." ". $response_array_pupils->school_year;
+
+        //     // insert_pupil_export($response_array_pupils->pupil_id,$response_array_pupils->first_name, $response_array_pupils->second_name, $response_array_pupils->last_name, $response_array_pupils->gender, $response_array_pupils->birth_date, $response_array_pupils->birth_place, $response_array_pupils->father_names, $response_array_pupils->mother_names, $response_array_pupils->parents_alive, $response_array_pupils->parents_state, $response_array_pupils->father_principal_work, $response_array_pupils->mother_principal_work, $response_array_pupils->lives_with, $response_array_pupils->cycle_school, $response_array_pupils->class_school, $response_array_pupils->class_order, $response_array_pupils->class_section, $response_array_pupils->class_option, $response_array_pupils->school_year, $response_array_pupils->email_address, $response_array_pupils->physical_address, $response_array_pupils->contact_phone_1, $response_array_pupils->contact_phone_2, $response_array_pupils->contact_phone_3, $response_array_pupils->contact_phone_4, randomUserId(10), $response_array_pupils->identification_number, $response_array_pupils->permanent_number, $response_array_pupils->nationality, $response_array_pupils->statut_scolaire);
+        //     // insert_class_completed_export($response_array_pupils->cycle_school, $response_array_pupils->class_school, $response_array_pupils->class_order, $response_array_pupils->class_section, $response_array_pupils->class_option, $response_array_pupils->school_year, $classes_alignment);
+            
+        //     array_push($pupils, $response_array_pupils);
+        // }
+        array_push($libelles, $response_array_libelles);
     }
 
     // $queryorders = "SELECT * FROM class_order";
@@ -213,6 +276,9 @@
     $response['paiements'] = $paiements;
     $response['frais_divers'] = $frais_divers;
     $response['pupils'] = $pupils;
+    $response['paiement_categories'] = $paiement_categories;
+    $response['classes_completed'] = $classes_completed;
+    $response['libelles'] = $libelles;
     // $response['classes'] = $classes;
     // $response['annees'] = $annees;
     // $response['cycles'] = $cycles;

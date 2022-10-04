@@ -101,15 +101,15 @@
         }
     }
 
-    $query_count = "SELECT school_year, cycle_school, class_school, class_order, class_section, class_option, COUNT(*) AS count_pupils_exist FROM pupils_info WHERE school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=?";
+    $query_count = "SELECT school_year, cycle_school, class_school, class_order, class_section, class_option, COUNT(*) AS count_pupils_exist FROM pupils_info WHERE school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND is_inactive=?";
     $request_count = $database_connect->prepare($query_count);
-    $request_count->execute(array($school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id));
+    $request_count->execute(array($school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id, 0));
     $response_count = $request_count->fetchObject();
 
     if($response_count->count_pupils_exist != 0) {
-        $query = "SELECT * FROM pupils_info WHERE school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
+        $query = "SELECT * FROM pupils_info WHERE school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND is_inactive=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
         $request = $database_connect->prepare($query);
-        $request->execute(array($school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id));
+        $request->execute(array($school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id, 0));
         while($response_pupil = $request->fetchObject()) {
             $first_pupil = $response_pupil->pupil_id;
             $pupil = array();
