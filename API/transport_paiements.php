@@ -24,7 +24,7 @@
         if ($sel_response2->description_libelle == $sel_response->description_libelle) {
           $edit0 = "UPDATE paiements SET libelle=? WHERE paiement_id=?";
           $edit = $database_connect->prepare($edit0);
-          $edit->execute(array($sel_response->libelle_id, $response_array_paiements->libelle));
+          $edit->execute(array($sel_response->libelle_id, $response_array_paiements->paiement_id));
 
           $nbr = $nbr + 1;
         }
@@ -44,8 +44,8 @@
 
         if ($sel_response2l->description_libelle == $sel_responsel->description_libelle) {
           $edit0l = "UPDATE frais_divers SET libelle=? WHERE frais_divers_id=?";
-          $editl = $database_connect->prepare($edit0);
-          $editl->execute(array($sel_responsel->libelle_id, $response_array_paiementsl->libelle));
+          $editl = $database_connect->prepare($edit0l);
+          $editl->execute(array($sel_responsel->libelle_id, $response_array_paiementsl->frais_divers_id));
 
           $nbr1 = $nbr1 + 1;
         }

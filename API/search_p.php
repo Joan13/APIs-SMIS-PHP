@@ -16,7 +16,7 @@ $_POST = json_decode($rest_json, true);
     $name = htmlspecialchars(trim(strip_tags($_POST['name'])));
 
     if ($name == "") {
-        $query_pupils_class = "SELECT * FROM pupils_info WHERE school_year='$annee' AND first_name LIKE '%$name%' OR second_name LIKE '%$name%' OR last_name LIKE '%$name%'";
+        $query_pupils_class = "SELECT * FROM pupils_info WHERE school_year='$annee' AND is_inactive='0' AND first_name LIKE '%$name%' OR second_name LIKE '%$name%' OR last_name LIKE '%$name%'";
         $request_pupils_class = $database_connect->query($query_pupils_class);
         while($response_pupils_class = $request_pupils_class->fetchObject()) {
 

@@ -13,6 +13,7 @@
     $array_paiements = array();
     $paiement_categories = array();
     $libelles = array();
+    $classes = array();
 
     $pupils = array();
 
@@ -22,10 +23,11 @@
         array_push($pupils, $element['pupils']);
         array_push($paiement_categories, $element['paiement_categories']);
         array_push($libelles, $element['libelles']);
+        array_push($classes, $element['classes_completed']);
     }
 
     // $truncate_paiements_query = "TRUNCATE paiements";
-    // $truncate_paiements_request = $database_connect->query($truncate_paiements_query);
+    // $truncate_paiements_request = $database_connect_export->query($truncate_paiements_query);
 
     foreach($paiements[0] as $cle => $paiement) {
 
@@ -100,20 +102,27 @@
         }
     }
 
-    // foreach($pupils[0] as $cle => $pupil) {
-    //     $verify_query = "SELECT pupil_id, COUNT(*) AS count_pupil_exist FROM pupils_info WHERE pupil_id=?";
-    //     $verify_request = $database_connect_export->prepare($verify_query);
-    //     $verify_request->execute(array($pupil['pupil_id']));
-    //     $verify_response = $verify_request->fetchObject();
+    foreach($pupils[0] as $cle => $pupil) {
+        // $verify_query = "SELECT pupil_id, COUNT(*) AS count_pupil_exist FROM pupils_info WHERE pupil_id=?";
+        // $verify_request = $database_connect_export->prepare($verify_query);
+        // $verify_request->execute(array($pupil['pupil_id']));
+        // $verify_response = $verify_request->fetchObject();
 
-    //     if ($verify_response->count_pupil_exist == 0) {
-    //         $classes_alignment = $pupil['cycle_school'] ." ". $pupil['class_school'] ." ". $pupil['class_order'] ." ". $pupil['class_section'] ." ". $pupil['class_option'] ." ". $pupil['school_year'];
+        // if ($verify_response->count_pupil_exist == 0) {
+            // $classes_alignment = $pupil['cycle_school'] ." ". $pupil['class_school'] ." ". $pupil['class_order'] ." ". $pupil['class_section'] ." ". $pupil['class_option'] ." ". $pupil['school_year'];
 
-    //         insert_pupil_export($pupil['first_name'], $pupil['second_name'], $pupil['last_name'], $pupil['gender'], $pupil['birth_date'], $pupil['birth_place'], $pupil['father_names'], $pupil['mother_names'], $pupil['parents_alive'], $pupil['parents_state'], $pupil['father_principal_work'], $pupil['mother_principal_work'], $pupil['lives_with'], $pupil['cycle_school'], $pupil['class_school'], $pupil['class_order'], $pupil['class_section'], $pupil['class_option'], $pupil['school_year'], $pupil['email_address'], $pupil['physical_address'], $pupil['contact_phone_1'], $pupil['contact_phone_2'], $pupil['contact_phone_3'], $pupil['contact_phone_4'], randomUserId(10), $pupil['identification_number'], $pupil['permanent_number'], $pupil['nationality'], $pupil['statut_scolaire']);
-    //         insert_class_completed_export($pupil['cycle_school'], $pupil['class_school'], $pupil['class_order'], $pupil['class_section'], $pupil['class_option'], $pupil['school_year'], $classes_alignment);
-    //     } else {
-    //     }
-    // }
+            insert_pupil_export($pupil['pupil_id'], $pupil['first_name'], $pupil['second_name'], $pupil['last_name'], $pupil['gender'], $pupil['birth_date'], $pupil['birth_place'], $pupil['father_names'], $pupil['mother_names'], $pupil['parents_alive'], $pupil['parents_state'], $pupil['father_principal_work'], $pupil['mother_principal_work'], $pupil['lives_with'], $pupil['cycle_school'], $pupil['class_school'], $pupil['class_order'], $pupil['class_section'], $pupil['class_option'], $pupil['school_year'], $pupil['email_address'], $pupil['physical_address'], $pupil['contact_phone_1'], $pupil['contact_phone_2'], $pupil['contact_phone_3'], $pupil['contact_phone_4'], $pupil['pupilIdentification'], $pupil['identification_number'], $pupil['permanent_number'], $pupil['nationality'], $pupil['statut_scolaire'], $pupil['paiement_category'], $pupil['date_creation'], $pupil['is_inactive']);
+            // insert_class_completed_export($pupil['cycle_school'], $pupil['class_school'], $pupil['class_order'], $pupil['class_section'], $pupil['class_option'], $pupil['school_year'], $classes_alignment);
+        // } else {
+        // }
+    }
+
+    foreach($classes[0] as $cle => $class) {
+            $classes_alignment = $class['cycle_id'] ." ". $class['class_id'] ." ". $class['order_id'] ." ". $class['section_id'] ." ". $class['option_id'] ." ". $class['school_year'];
+            insert_class_completed_export($class['id_classes'], $class['cycle_id'], $class['class_id'], $class['order_id'], $class['section_id'], $class['option_id'], $class['school_year'], $classes_alignment);
+
+// echo($class);
+    }
 
     // foreach($libelles[0] as $cle => $libelle) {
 
@@ -134,8 +143,9 @@
     //     }
     // }
 
-    // $response['paiements'] = $array_paiements;
-    echo json_encode('1');
+    // $response['classes'] = $element['classes_completed'];
+    $response['success'] = '1';
+    echo json_encode($response);
 
 
 ?>

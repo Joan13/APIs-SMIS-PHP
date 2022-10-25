@@ -160,20 +160,7 @@
     $query_classes_completed = "SELECT * FROM classes_completed WHERE school_year='$annee'";
     $request_classes_completed = $database_connect->query($query_classes_completed);
     while($response_array_classes_completed = $request_classes_completed->fetchObject()) {
-        // $verify_query = "SELECT paiement_id, COUNT(*) AS count_paiement_exist FROM paiements WHERE paiement_id=?";
-        // $verify_request = $database_connect->prepare($verify_query);
-        // $verify_request->execute(array($response_array_paiments->paiement_id));
-        // $verify_response = $verify_request->fetchObject();
-    
-        // if ($verify_response->count_paiement_exist == 0) {
-        //     $insert_query = "INSERT INTO paiements(paiement_id, pupil_id, montant_paye, montant_text, libelle, total_montant, school_year, paiement_validated, date_creation)
-        //         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        //     // $insert_request = $database_connect_export->prepare($insert_query);
-        //     // $insert_request->execute(array($response_array_paiments->paiement_id, $response_array_paiments->pupil_id, $response_array_paiments->montant_paye, $response_array_paiments->montant_text, $response_array_paiments->libelle, $response_array_paiments->total_montant, $response_array_paiments->school_year, $response_array_paiments->paiement_validated, $response_array_paiments->date_creation));
-
-        //     array_push($paiements, $response_array_paiments);
-        // }
-        array_push($classes_completed, $response_array_paiement_categories);
+        array_push($classes_completed, $response_array_classes_completed);
     }
 
     
@@ -214,6 +201,12 @@
         // }
         array_push($libelles, $response_array_libelles);
     }
+
+    // $queryClassesCompleted = "SELECT * FROM classes_completed WHERE school_year='$annee'";
+    // $requestClassesCompleted = $database_connect->query($queryClassesCompleted);
+    // while($response_array_classes_completed = $requestClassesCompleted->fetchObject()) {
+    //     array_push($classes_completed, $response_array_classes_completed);
+    // }
 
     // $queryorders = "SELECT * FROM class_order";
     // $requestorders = $database_connect->query($queryorders);

@@ -24,6 +24,12 @@
     $sub_domains = array();
     $ttotal = 0;
     $ppayed = 0;
+    $solde_t1 = array();
+    $solde_t2 = array();
+    $solde_t3 = array();
+    $completed1 = array();
+    $completed2 = array();
+    $completed3 = array();
     
     // $school_year = 1;//htmlspecialchars(trim(strip_tags($_POST["school_year"])));
     // $cycle_id = 1;//htmlspecialchars(trim(strip_tags($_POST["cycle_id"])));
@@ -107,9 +113,9 @@
     $response_count = $request_count->fetchObject();
 
     if($response_count->count_pupils_exist != 0) {
-        $query = "SELECT * FROM pupils_info WHERE school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND is_inactive=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
+        $query = "SELECT * FROM pupils_info WHERE is_inactive=? AND school_year=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND is_inactive=? ORDER BY first_name ASC, second_name ASC, last_name ASC";
         $request = $database_connect->prepare($query);
-        $request->execute(array($school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id, 0));
+        $request->execute(array(0,$school_year, $cycle_id, $class_id, $order_id, $section_id, $option_id, 0));
         while($response_pupil = $request->fetchObject()) {
             $first_pupil = $response_pupil->pupil_id;
             $pupil = array();
@@ -147,26 +153,42 @@
                 $s1 = $main_total_montant/3;
             }
 
+            $pupil_solde_t1 = array();
+            $pupil_solde_t2 = array();
+            $pupil_solde_t3 = array();
+            $pupil_completed_t1 = array();
+            $pupil_completed_t2 = array();
+            $pupil_completed_t3 = array();
+
             $s2 = $s1 + $s1;
             $s3 = $s2 + $s1;
 
             $montant = $montants_payes;
-            if($montant != 0)
-            {
-                if($montant <= $s1)
-                {
-                    if($montant == $s1)
-                    {
+            if($montant != 0) {
+                if($montant <= $s1) {
+                    if($montant == $s1) {
                         $message_soldes_t1 = "0";
                         $message_soldes_t2 = $s1;
                         $message_soldes_t3 = $s1;
-                    }
-                    else
-                    {
+                        $pupil_completed_t1['solde'] = $message_soldes_t1;
+                        $pupil_completed_t1['pupil'] = $response_pupil;
+                        array_push($completed1, $pupil_completed_t1);
+
+                        $pupil_solde_t2['solde'] = $message_soldes_t2;
+                $pupil_solde_t2['pupil'] = $response_pupil;
+                array_push($solde_t2, $pupil_solde_t2);
+                    } else {
                         $tr1 = $s1-$montant;
                         $message_soldes_t1 = "$tr1";
                         $message_soldes_t2 = $s1;
                         $message_soldes_t3 = $s1;
+                        $pupil_solde_t1['solde'] = $message_soldes_t1;
+                        $pupil_solde_t1['pupil'] = $response_pupil;
+                        array_push($solde_t1, $pupil_solde_t1);
+
+                        $pupil_solde_t2['solde'] = $message_soldes_t2;
+                $pupil_solde_t2['pupil'] = $response_pupil;
+                array_push($solde_t2, $pupil_solde_t2);
                     }
                 }
 
@@ -177,6 +199,9 @@
                         $message_soldes_t1 = "0";
                         $message_soldes_t2 = "0";
                         $message_soldes_t3 = $s1;
+                        $pupil_completed_t2['solde'] = $message_soldes_t2;
+                        $pupil_completed_t2['pupil'] = $response_pupil;
+                        array_push($completed2, $pupil_completed_t1);
                     }
                     else
                     {
@@ -184,6 +209,9 @@
                         $message_soldes_t1 = "0";
                         $message_soldes_t2 = "$tr2";
                         $message_soldes_t3 = $s1;
+                        $pupil_solde_t2['solde'] = $message_soldes_t2;
+                        $pupil_solde_t2['pupil'] = $response_pupil;
+                        array_push($solde_t2, $pupil_solde_t2);
                     }
                 }
 
@@ -194,6 +222,9 @@
                         $message_soldes_t1 = "0";
                         $message_soldes_t2 = "0";
                         $message_soldes_t3 = "0";
+                        $pupil_completed_t3['solde'] = $message_soldes_t3;
+                        $pupil_completed_t3['pupil'] = $response_pupil;
+                        array_push($completed3, $pupil_completed_t3);
                     }
                     else
                     {
@@ -201,6 +232,9 @@
                         $message_soldes_t1 = "0";
                         $message_soldes_t2 = "0";
                         $message_soldes_t3 = "$tr3";
+                        $pupil_solde_t3['solde'] = $message_soldes_t3;
+                        $pupil_solde_t3['pupil'] = $response_pupil;
+                        array_push($solde_t3, $pupil_solde_t3);
                     }
                 }
             }
@@ -209,8 +243,18 @@
                 $message_soldes_t1 = $s1;
                 $message_soldes_t2 = $s1;
                 $message_soldes_t3 = $s1;
+                $pupil_solde_t1['solde'] = $message_soldes_t1;
+                $pupil_solde_t1['pupil'] = $response_pupil;
+                array_push($solde_t1, $pupil_solde_t1);
+
+                
+
+                $pupil_solde_t3['solde'] = $message_soldes_t3;
+                $pupil_solde_t3['pupil'] = $response_pupil;
+                array_push($solde_t3, $pupil_solde_t3);       
             }
 
+            $soldes_paiements['total_paiement'] = $montant_total;
             $soldes_paiements['solde'] = $montant_total-$montants_payes;
             $soldes_paiements['solde1'] = $message_soldes_t1;
             $soldes_paiements['solde2'] = $message_soldes_t2;
@@ -360,6 +404,12 @@
     $response['conseil_deliberation'] = $conseils;
     $response['paye_paiements'] = $ppayed;
     $response['total_paiements'] = $ttotal;
+    $response['solde1'] = $solde_t1;
+    $response['solde2'] = $solde_t2;
+    $response['solde3'] = $solde_t3;
+    $response['completed1'] = $completed1;
+    $response['completed2'] = $completed2;
+    $response['completed3'] = $completed3;
     
     echo json_encode($response);
 

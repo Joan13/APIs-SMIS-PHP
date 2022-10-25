@@ -15,9 +15,9 @@
     $name = htmlspecialchars(trim(strip_tags($_POST['name'])));
 
     if($name === "") {
-        $querypupils = "SELECT * FROM pupils_info WHERE school_year=?";
+        $querypupils = "SELECT * FROM pupils_info WHERE school_year=? AND is_inactive=?";
         $requestpupils = $database_connect->prepare($querypupils);
-        $requestpupils->execute(array($annee));
+        $requestpupils->execute(array($annee, 0));
         while($response_array_pupils = $requestpupils->fetchObject()) {
             $pupil = array();
             $pupil['pupil'] = $response_array_pupils;
@@ -29,9 +29,9 @@
             $pupils_count = $pupils_count + 1;
         }
     } else {
-        $querypupils = "SELECT * FROM pupils_info WHERE school_year=? AND (first_name LIKE '%$name%' OR second_name LIKE '%$name%' OR last_name LIKE '%$name%')";
+        $querypupils = "SELECT * FROM pupils_info WHERE school_year=? AND is_inactive=? AND (first_name LIKE '%$name%' OR second_name LIKE '%$name%' OR last_name LIKE '%$name%')";
         $requestpupils = $database_connect->prepare($querypupils);
-        $requestpupils->execute(array($annee));
+        $requestpupils->execute(array($annee, 0));
         while($response_array_pupils = $requestpupils->fetchObject()) {
             $pupil = array();
             $pupil['pupil'] = $response_array_pupils;

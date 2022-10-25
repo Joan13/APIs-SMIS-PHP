@@ -3,12 +3,17 @@
 	$dbhost = 'localhost';
 	$dbname = 'school_administration';
 	$dbuser = 'root';
-	$dbpassword = '';
+	$dbpassword = 'root';
 
-	// $dbhost = '185.98.131.158';
-	// $dbname = 'cseli1701093';
-	// $dbuser = 'cseli1701093';
-	// $dbpassword = 'vttwkbtca3';
+	// $dbhost = '185.98.131.177';
+	// $dbname = 'cseli1969453';
+	// $dbuser = 'cseli1969453';
+	// $dbpassword = 'wo5gbupe02';
+
+	// $dbhost = '185.98.131.177';
+	// $dbname = 'colle1982315';
+	// $dbuser = 'colle1982315';
+	// $dbpassword = '0amlyzotyp';
 
 	try {
 		$database_connect = new PDO('mysql:host='.$dbhost.';dbname='.$dbname,$dbuser,$dbpassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
@@ -18,17 +23,25 @@
 	}
 
 
-	// $dbhostExport = '185.98.131.158';
-	// $dbnameExport = 'cseli1701093';
-	// $dbuserExport = 'cseli1701093';
-	// $dbpasswordExport = 'vttwkbtca3';
+	// $dbhostExport = '185.98.131.177';
+	// $dbnameExport = 'cseli1969453';
+	// $dbuserExport = 'cseli1969453';
+	// $dbpasswordExport = 'wo5gbupe02';
 
-	// try
-	// {
+	// $dbhostExport = '185.98.131.177';
+	// $dbnameExport = 'colle1982315';
+	// $dbuserExport = 'colle1982315';
+	// $dbpasswordExport = '0amlyzotyp';
+
+	// $dbhostExport = 'localhost';
+	// $dbnameExport = 'school_administration_export';
+	// $dbuserExport = 'root';
+	// $dbpasswordExport = 'root';
+
+	// try {
 	// 	$database_connect_export = new PDO('mysql:host='.$dbhostExport.';dbname='.$dbnameExport,$dbuserExport,$dbpasswordExport, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 	// }
-	// catch(Exception $database_error)
-	// {
+	// catch(Exception $database_error) {
 	// 	die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
 	// }
 
@@ -100,7 +113,7 @@
 	// $phone_2 = "+243 819 009 678";
 
 	$school_name = "Collège Alfajiri";
-	$school_name_abb = "Collège Alfajri";
+	$school_name_abb = "Collège Alfajiri";
 	$devise_school = "Une école de référence";
 	$school_bp = "B.P. 1612 - BUKAVU";
 	$email_school = "c.stella@jesuits.net";

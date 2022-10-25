@@ -1,5 +1,17 @@
 <?php
 
+	function convert_class_to_array($data) {
+		if (is_object($data)) {
+			$data = get_object_vars($data);
+		}
+
+		if (is_array($data)) {
+			return array_map(__FUNCTION__, $data);
+		} else {
+			return $data;
+		}
+	}
+
 	function insert_pupil($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $id_number, $perm_number, $nat, $stat, $paiement_category) {
 		global $database_connect;
 
@@ -21,22 +33,25 @@
 		}
 	}
 
-	// function insert_pupil_export($pid, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $id_number, $perm_number, $nat, $stat) {
-	// 	global $database_connect_export;
+	function insert_pupil_export($pid, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $id_number, $perm_number, $nat, $stat, $paiement_category, $date, $is_inactive) {
+		global $database_connect_export;
 
-	// 	$count_pupil_exists_query = "SELECT first_name, second_name, last_name, gender, cycle_school, class_school, class_order, class_section, class_option, school_year, COUNT(*) AS pupil_exists FROM pupils_info WHERE first_name=? AND second_name=? AND last_name=? AND gender=? AND cycle_school=? AND class_school=? AND class_order=? AND class_section=? AND class_option=? AND school_year=?";
-	// 	$count_pupil_exists_request = $database_connect_export->prepare($count_pupil_exists_query);
-	// 	$count_pupil_exists_request->execute(array($arg1, $arg2, $arg3, $arg4, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19));
-	// 	$count_pupil_exists_response = $count_pupil_exists_request->fetchObject();
+		$count_pupil_exists_query = "SELECT pupil_id, COUNT(*) AS pupil_exists FROM pupils_info WHERE pupil_id=?";
+		$count_pupil_exists_request = $database_connect_export->prepare($count_pupil_exists_query);
+		$count_pupil_exists_request->execute(array($pid));
+		$count_pupil_exists_response = $count_pupil_exists_request->fetchObject();
 
-	// 	if($count_pupil_exists_response->pupil_exists == 0) {
-	// 		$array_insert = array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26);
-	// 		$query = "INSERT INTO pupils_info(pupil_id, first_name, second_name, last_name, gender, birth_date, birth_place, father_names, mother_names, parents_alive, parents_state, father_principal_work, mother_principal_work, lives_with, cycle_school, class_school, class_order, class_section, class_option, school_year, email_address, physical_address, contact_phone_1, contact_phone_2, contact_phone_3, contact_phone_4, pupilIdentification, statut_scolaire, is_inactive, permanent_number, identification_number, nationality)
-	// 			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-	// 		$request = $database_connect_export->prepare($query);
-	// 		$request->execute(array($pid, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $stat, 0, $perm_number, $id_number, $nat));
-	// 	}
-	// }
+		if($count_pupil_exists_response->pupil_exists == 0) {
+			$query = "INSERT INTO pupils_info(pupil_id, first_name, second_name, last_name, gender, birth_date, birth_place, father_names, mother_names, parents_alive, parents_state, father_principal_work, mother_principal_work, lives_with, cycle_school, class_school, class_order, class_section, class_option, school_year, email_address, physical_address, contact_phone_1, contact_phone_2, contact_phone_3, contact_phone_4, pupilIdentification, statut_scolaire, is_inactive, permanent_number, identification_number, nationality, paiement_category, date_creation)
+				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			$request = $database_connect_export->prepare($query);
+			$request->execute(array($pid, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $stat, $is_inactive, $perm_number, $id_number, $nat, $paiement_category, $date));
+		} else {
+			$query = "UPDATE pupils_info SET first_name=?, second_name=?, last_name=?, gender=?, birth_date=?, birth_place=?, father_names=?, mother_names=?, parents_alive=?, parents_state=?, father_principal_work=?, mother_principal_work=?, lives_with=?, cycle_school=?, class_school=?, class_order=?, class_section=?, class_option=?, school_year=?, email_address=?, physical_address=?, contact_phone_1=?, contact_phone_2=?, contact_phone_3=?, contact_phone_4=?, pupilIdentification=?, statut_scolaire=?, is_inactive=?, permanent_number=?, identification_number=?, nationality=?, paiement_category=?, date_creation=? WHERE pupil_id=?";
+			$request = $database_connect_export->prepare($query);
+			$request->execute(array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7, $arg8, $arg9, $arg10, $arg11, $arg12, $arg13, $arg14, $arg15, $arg16, $arg17, $arg18, $arg19, $arg20, $arg21, $arg22, $arg23, $arg24, $arg25, $arg26, $stat, $is_inactive, $perm_number, $id_number, $nat, $paiement_category, $date, $pid));
+		}
+	}
 
 	function randomUserId($length) {
     	$alphabet = "0123456789abcdefghijklmnopqrstuvwxyz9876543210ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -60,20 +75,18 @@
     	}
 	}
 
-	function insert_class_completed_export($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7) {
+	function insert_class_completed_export($id_classes, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7) {
 		global $database_connect_export;
-    	$exist00 = "SELECT cycle_id, class_id, order_id, section_id, option_id, school_year, COUNT(*) AS count_class_completed_exist FROM classes_completed WHERE cycle_id=? AND class_id=? AND order_id=? AND section_id=? AND option_id=? AND school_year=?";
+    	$exist00 = "SELECT id_classes, COUNT(*) AS count_class_completed_exists FROM classes_completed WHERE id_classes=?";
     	$exist11 = $database_connect_export->prepare($exist00);
-    	$exist11->execute(array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6));
+    	$exist11->execute(array($id_classes));
     	$exist = $exist11->fetchObject();
-    	$res = $exist->count_class_completed_exist;
 
-    	if($res == 0)
-    	{
-    		$query = "INSERT INTO classes_completed(cycle_id, class_id, order_id, section_id, option_id, school_year, classes_alignment)
-    					VALUES(?, ?, ?, ?, ?, ?, ?) ";
+    	if($exist->count_class_completed_exists == 0) {
+    		$query = "INSERT INTO classes_completed(id_classes, cycle_id, class_id, order_id, section_id, option_id, school_year, classes_alignment)
+    					VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
     		$request = $database_connect_export->prepare($query);
-    		$request->execute(array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7));
+    		$request->execute(array($id_classes, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7));
     	}
 	}
 
