@@ -1,11 +1,11 @@
 <?php
 
-require_once("../config/dbconnect.functions.php");
-require_once("../config/functions.php");
+    require_once("../config/dbconnect.functions.php");
+    require_once("../config/functions.php");
 
-header("Access-Control-Allow-Origin: *");
-$rest_json = file_get_contents("php://input");
-$_POST = json_decode($rest_json, true);
+    header("Access-Control-Allow-Origin: *");
+    $rest_json = file_get_contents("php://input");
+    $_POST = json_decode($rest_json, true);
 
     $response = array();
     $pupils = array();

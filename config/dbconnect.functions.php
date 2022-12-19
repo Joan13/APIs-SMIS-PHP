@@ -225,6 +225,9 @@
 	// 	}
 	// }
 
+	// sbahati@gmail.com
+	// c.stella@jesuits.net
+
 	function make_users() {
         global $database_connect;
         $query = "SELECT * FROM users WHERE username=?";
