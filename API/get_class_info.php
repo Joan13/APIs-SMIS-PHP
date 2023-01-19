@@ -32,9 +32,9 @@
     $completed3 = array();
     
     // $school_year = 1;//htmlspecialchars(trim(strip_tags($_POST["school_year"])));
-    // $cycle_id = 1;//htmlspecialchars(trim(strip_tags($_POST["cycle_id"])));
-    // $class_id = 1;//htmlspecialchars(trim(strip_tags($_POST["class_id"])));
-    // $order_id = 1;//htmlspecialchars(trim(strip_tags($_POST["order_id"])));
+    // $cycle_id = 2;//htmlspecialchars(trim(strip_tags($_POST["cycle_id"])));
+    // $class_id = 3;//htmlspecialchars(trim(strip_tags($_POST["class_id"])));
+    // $order_id = 13;//htmlspecialchars(trim(strip_tags($_POST["order_id"])));
     // $section_id = 0;//htmlspecialchars(trim(strip_tags($_POST["section_id"])));
     // $option_id = 0;//htmlspecialchars(trim(strip_tags($_POST["option_id"])));
 
@@ -120,6 +120,20 @@
             $first_pupil = $response_pupil->pupil_id;
             $pupil = array();
             $pupil_marks = array();
+            $marks_p1 = 0;
+            $marks_p2 = 0;
+            $marks_p3 = 0;
+            $marks_p4 = 0;
+            $marks_p5 = 0;
+            $marks_p6 = 0;
+            $marks_ex1 = 0;
+            $marks_ex2 = 0;
+            $marks_ex3 = 0;
+            $marks_sem1 = 0;
+            $marks_sem2 = 0;
+            $marks_sem3 = 0;
+            $marks_total = 0;
+            $all_marks = array();
             $pupil_conduite = array();
             $pupil_paiements = array();
             $montant_total = 0;
@@ -175,8 +189,8 @@
                         array_push($completed1, $pupil_completed_t1);
 
                         $pupil_solde_t2['solde'] = $message_soldes_t2;
-                $pupil_solde_t2['pupil'] = $response_pupil;
-                array_push($solde_t2, $pupil_solde_t2);
+                        $pupil_solde_t2['pupil'] = $response_pupil;
+                        array_push($solde_t2, $pupil_solde_t2);
                     } else {
                         $tr1 = $s1-$montant;
                         $message_soldes_t1 = "$tr1";
@@ -187,8 +201,8 @@
                         array_push($solde_t1, $pupil_solde_t1);
 
                         $pupil_solde_t2['solde'] = $message_soldes_t2;
-                $pupil_solde_t2['pupil'] = $response_pupil;
-                array_push($solde_t2, $pupil_solde_t2);
+                        $pupil_solde_t2['pupil'] = $response_pupil;
+                        array_push($solde_t2, $pupil_solde_t2);
                     }
                 }
 
@@ -246,8 +260,6 @@
                 $pupil_solde_t1['solde'] = $message_soldes_t1;
                 $pupil_solde_t1['pupil'] = $response_pupil;
                 array_push($solde_t1, $pupil_solde_t1);
-
-                
 
                 $pupil_solde_t3['solde'] = $message_soldes_t3;
                 $pupil_solde_t3['pupil'] = $response_pupil;
@@ -325,8 +337,45 @@
                 $request_marks = $database_connect->prepare($query_marks);
                 $request_marks->execute(array($response_pupil->pupil_id));
                 while($response_marks = $request_marks->fetchObject()) {
-                    // array_push($pupil_marks, $response_marks);
+
+                    if ($response_marks->school_period == '1') {
+                        $marks_p1 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '2') {
+                        $marks_p2 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '3') {
+                        $marks_p3 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '4') {
+                        $marks_p4 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '5') {
+                        $marks_p5 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '6') {
+                        $marks_p6 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '10') {
+                        $marks_ex1 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '11') {
+                        $marks_ex2 += $response_marks->main_marks;
+                    }
+
+                    if ($response_marks->school_period == '12') {
+                        $marks_ex3 += $response_marks->main_marks;
+                    }
+                    
                     array_push($marks, $response_marks);
+                    array_push($all_marks, $response_marks);
                 }
             }
 
@@ -360,12 +409,28 @@
                 }
             }
 
+            $pupil_marks['p1'] = $marks_p1;
+            $pupil_marks['p2'] = $marks_p2;
+            $pupil_marks['p3'] = $marks_p3;
+            $pupil_marks['p4'] = $marks_p4;
+            $pupil_marks['p5'] = $marks_p5;
+            $pupil_marks['p6'] = $marks_p6;
+            $pupil_marks['ex1'] = $marks_ex1;
+            $pupil_marks['ex2'] = $marks_ex2;
+            $pupil_marks['ex3'] = $marks_ex3;
+            $pupil_marks['sem1'] = $marks_p1 + $marks_p2 + $marks_ex1;
+            $pupil_marks['sem2'] = $marks_p3 + $marks_p4 + $marks_ex2;
+            $pupil_marks['sem3'] = $marks_p5 + $marks_p6 + $marks_ex3;
+            $pupil_marks['total'] = $marks_sem1 + $marks_sem2 + $marks_sem3;
+
             $pupil['pupil'] = $response_pupil;
             $pupil['pupil_id'] = $response_pupil->pupil_id;
-            $pupil['marks'] = $pupil_marks;
+            $pupil['tmarks'] = $pupil_marks;
+            $pupil['marks'] = $all_marks;
             $pupil['soldes_paiements'] = $soldes_paiements;
             $pupil['conduites'] = $pupil_conduite;
             $pupil['paiements'] = $pupil_paiements;
+
             array_push($pupils, $pupil);
         }
     }
@@ -400,7 +465,6 @@
     $response['pupils'] = $pupils;
     $response['first_pupil'] = $first_pupil;
     $response['first_course'] = $first_course;
-    $response['pupils_marks'] = $marks;
     $response['conseil_deliberation'] = $conseils;
     $response['paye_paiements'] = $ppayed;
     $response['total_paiements'] = $ttotal;

@@ -31,7 +31,7 @@
     $pupils_count_male = 0;
     $pupils_count_female = 0;
     $pupils_marks = array();
-    $main_total_montant = 0;
+    $main_total_montant = 0; 
     $paiement_categories = array();
 
     $annee = $_POST['annee'];

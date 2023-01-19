@@ -3,7 +3,7 @@
 	$dbhost = 'localhost';
 	$dbname = 'school_administration';
 	$dbuser = 'root';
-	$dbpassword = 'root';
+	$dbpassword = '';
 
 	// $dbhost = '185.98.131.177';
 	// $dbname = 'cseli1969453';
@@ -82,7 +82,7 @@
 	// $school_name_abb = "Masomo";
 	// $devise_school = "Une école de référence";
 	// $school_bp = "B.P.  - BUKAVU";
-	// $email_school = "cs.elite@gmail.com";
+	// $email_school = "masomo@gmail.com";
 	// $school_city = "Bukavu";
 	// $school_province = "Sud-Kivu";
 	// $school_commune = "Ibanda";

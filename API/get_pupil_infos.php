@@ -8,8 +8,6 @@
     $_POST = json_decode($rest_json, true);
 
     $response = array();
-    
-
     $pupil_id = $_POST['pupil_id'];
 
     $query_pupils_class = "SELECT * FROM pupils_info WHERE pupil_id='$pupil_id'";
