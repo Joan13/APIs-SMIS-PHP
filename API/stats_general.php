@@ -160,9 +160,25 @@
                             $t1payed = $t1payed + $t1_payed;
                             $t2payed = $t2payed + $t2_payed;
                             $t3payed = $t3payed + $t3_payed;
-                            $pourcentage = ($t1_payed * 100)/$t1;
-                            $pourcentage2 = ($t2_payed * 100)/$t2;
-                            $pourcentage3 = ($t3_payed * 100)/$t3;
+                            
+                            if($t1 != 0) {
+                                $pourcentage = ($t1_payed * 100)/$t1;
+                            } else {
+                                $pourcentage = 0;
+                            }
+
+                            if ($t2 != 0) {
+                                $pourcentage2 = ($t2_payed * 100)/$t2;
+                            } else {
+                                $pourcentage2 = 0;
+                            }
+
+                            if ($t3 != 0) {
+                                $pourcentage3 = ($t3_payed * 100)/$t3;
+                            } else {
+                                $pourcentage3 = 0;
+                            }
+                            
                             array_push($t1_percentages, $pourcentage);
                             array_push($t2_percentages, $pourcentage2);
                             array_push($t3_percentages, $pourcentage3);

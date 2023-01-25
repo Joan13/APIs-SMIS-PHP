@@ -1,19 +1,19 @@
 <?php
 
-	$dbhost = 'localhost';
-	$dbname = 'school_administration';
-	$dbuser = 'root';
-	$dbpassword = '';
+	// $dbhost = 'localhost';
+	// $dbname = 'school_administration';
+	// $dbuser = 'root';
+	// $dbpassword = '';
 
 	// $dbhost = '185.98.131.177';
 	// $dbname = 'cseli1969453';
 	// $dbuser = 'cseli1969453';
 	// $dbpassword = 'wo5gbupe02';
 
-	// $dbhost = '185.98.131.177';
-	// $dbname = 'colle1982315';
-	// $dbuser = 'colle1982315';
-	// $dbpassword = '0amlyzotyp';
+	$dbhost = '185.98.131.177';
+	$dbname = 'colle1982315';
+	$dbuser = 'colle1982315';
+	$dbpassword = '0amlyzotyp';
 
 	try {
 		$database_connect = new PDO('mysql:host='.$dbhost.';dbname='.$dbname,$dbuser,$dbpassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));

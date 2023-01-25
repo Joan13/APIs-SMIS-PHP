@@ -130,6 +130,7 @@
 	$response['success'] = $success;
 	$response['tmarks'] = $pupil_marks;
 	$response['marks'] = $all_marks;
+	$response['pupil'] = $pupil_id;
 	echo json_encode($response);
 
 ?>
