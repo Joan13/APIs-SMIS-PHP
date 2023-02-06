@@ -15,7 +15,7 @@
     $poste = htmlspecialchars(strip_tags(trim(ucwords($_POST['poste']))));
     $free_day_1 = htmlspecialchars(strip_tags(trim(ucwords($_POST['free_day_1']))));
     $free_day_2 = htmlspecialchars(strip_tags(trim(ucwords($_POST['free_day_2']))));
-    $user_name = htmlspecialchars(strip_tags(trim(ucwords($_POST['user_name']))));
+    $user_name = htmlspecialchars(strip_tags(trim($_POST['user_name'])));
     $school_year = htmlspecialchars(strip_tags(trim(ucwords($_POST['school_year']))));
 
     $query_count = "SELECT first_name, second_name, last_name, user_name, gender, poste, worker_year, COUNT(*) AS count_worker_exists FROM workers_info WHERE first_name=? AND second_name=? AND last_name=? AND user_name=? AND gender=? AND poste=? AND worker_year=?";
