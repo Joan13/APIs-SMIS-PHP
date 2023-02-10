@@ -10,8 +10,6 @@
 	$course_name = htmlspecialchars(strip_tags(trim($_POST["course_name"])));
 	$total_marks = htmlspecialchars(strip_tags(trim($_POST['total_marks'])));
 
-	
-
 	if($course_id == '' || $course_name == "" || $total_marks == "")
 	{
 
