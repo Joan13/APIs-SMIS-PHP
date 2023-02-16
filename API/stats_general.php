@@ -69,11 +69,6 @@
                 $filles = $filles + 1;
             }
 
-            // if($response_pupil->paiement_category == '') {
-            //     $modify_query = "UPDATE pupils_info SET paiement_category='$categories_response->category_id' WHERE pupil_id='$response_pupil->pupil_id'";
-            //     $modify_request = $database_connect->query($modify_query);
-            // }
-
             if($response_pupil->paiement_category != '0') {
                 $category_query = "SELECT * FROM paiement_categories WHERE category_id='$response_pupil->paiement_category' AND school_year='$annee'";
                 $category_request = $database_connect->query($category_query);
