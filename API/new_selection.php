@@ -10,20 +10,35 @@
 	$selection_type = htmlspecialchars(strip_tags(trim($_POST['selection_type'])));
 	$selection_privacy = htmlspecialchars(strip_tags(trim($_POST['selection_privacy'])));
 	$user_id = htmlspecialchars(strip_tags(trim($_POST['user_id'])));
+	$school_year = htmlspecialchars(strip_tags(trim($_POST['school_year'])));
+	$selection_data = $_POST['selection_data'];
 
-	// $exist00 = "SELECT course_name, cycle_id, class_id, section_id, option_id, total_marks, school_year, COUNT(*) AS count_course_exist FROM courses WHERE course_name=? AND cycle_id=? AND class_id=? AND section_id=? AND option_id=? AND total_marks=? AND school_year=? ";
-	// $exist11 = $database_connect->prepare($exist00);
-	// $exist11->execute(array($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7));
-	// $exist = $exist11->fetchObject();
-	// $res = $exist->count_course_exist;
+	$response = array();
+	$uccess = '';
 
-	// if($res == 0) {
-		$query = "INSERT INTO selections(selction_name, selection_type, selection_privacy, user_id)
-					VALUES(?, ?, ?, ?) ";
-		$request = $database_connect->prepare($query);
-		$request->execute(array($selection_name, $selection_type, $selection_privacy, $user_id));
-	// }
+	$query = "INSERT INTO selections(selection_name, selection_type, selection_privacy, user_id, school_year)
+				VALUES('$selection_name', '$selection_type', '$selection_privacy', '$user_id', '$school_year')";
+	$database_connect->exec($query);
 
-	echo json_encode("1");
+	$selection_id = $database_connect->lastInsertId();
+	
+	foreach($selection_data as $value){
+		$select_count = "SELECT selection_id, data_id, COUNT(*) AS count_data FROM selection_data WHERE selection_id='$selection_id' AND data_id='$value'";
+		$request_count = $database_connect->query($select_count);
+		$response_count = $request_count->fetchObject();
+
+		
+		if($response_count->count_data == 0) {
+			$query = "INSERT INTO selection_data(selection_id, data_id)
+					VALUES(?, ?) ";
+			$request = $database_connect->prepare($query);
+			$request->execute(array($selection_id, $value));
+
+			$success = "1";
+		}
+	}
+
+	$response['success'] = $success;
+	echo json_encode($response);
 
 ?>

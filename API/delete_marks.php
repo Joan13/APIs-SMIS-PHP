@@ -7,7 +7,7 @@
     $_POST = json_decode($rest_json, true);
 
 	$periode_marks = htmlspecialchars(strip_tags(trim($_POST['periode'])));
-	$year_school = htmlspecialchars(strip_tags(trim($_POST['school_year'])));
+	// $year_school = htmlspecialchars(strip_tags(trim($_POST['school_year'])));
 	$pupil_id = htmlspecialchars(strip_tags(trim($_POST['pupil_id'])));
 
 	$qq = "DELETE FROM marks_info WHERE pupil=? AND school_period=?";

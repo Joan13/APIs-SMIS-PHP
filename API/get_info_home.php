@@ -3,7 +3,7 @@
     require_once("../config/dbconnect.functions.php");
     require_once("../config/functions.php");
 
-    header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Origin: *");
     $rest_json = file_get_contents("php://input");
     $_POST = json_decode($rest_json, true);
 
@@ -33,6 +33,7 @@
     $pupils_marks = array();
     $main_total_montant = 0; 
     $paiement_categories = array();
+    $selections = array();
 
     $annee = $_POST['annee'];
 
@@ -152,6 +153,24 @@
     while($response_paiements = $request_paiements->fetchObject()) {
         $payes = $payes + $response_paiements->montant_paye;
     }
+
+    // $query_selections = "SELECT * FROM selections WHERE school_year='$annee'";
+    // $request_selections = $database_connect->query($query_selections);
+    // while($response_selections = $request_selections->fetchObject()) {
+
+    //     $selection = array();
+    //     $selection_data = array();
+
+    //     $query_selections_data = "SELECT * FROM selection_data WHERE selection_id='$response_selections->selection_id'";
+    //     $request_selections_data = $database_connect->query($query_selections_data);
+    //     while($response_selections_data = $request_selections_data->fetchObject()) {
+    //         array_push($selection_data, $response_selections_data);
+    //     }
+
+    //     $selection['selection'] = $response_selections;
+    //     $selection['selection_data'] = $selection_data;
+    //     array_push($selections, $selection);
+    // }
 
     $query = "SELECT * FROM school_years ORDER BY year_id DESC";
     $request = $database_connect->query($query);
@@ -444,6 +463,7 @@
     $response['echecs'] = $echecs;
     $response['abandon'] = $abandon;
     $response['libelles'] = $libelles;
+    $response['selections'] = $selections;
     $response['paiement_categories'] = $paiement_categories;
     echo json_encode($response);
 
