@@ -1,7 +1,7 @@
 <?php
 
 	$dbhost = 'localhost';
-	$dbname = 'school_administration_cirezi';
+	$dbname = 'school_administration';
 	$dbuser = 'root';
 	$dbpassword = '';
 
@@ -101,16 +101,16 @@
 	// $phone_1 = "+243 991 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	// $school_name = "Lycée Cirezi";
-	// $school_name_abb = "Lycée Cirezi";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P. 2276 - BUKAVU";
-	// $email_school = "lycee.cirezi@gmail.com";
-	// $school_city = "Bukavu";
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 971 776 858";
-	// $phone_2 = "+243 819 009 678";
+	$school_name = "Lycée Cirezi";
+	$school_name_abb = "Lycée Cirezi";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P. 2276 - BUKAVU";
+	$email_school = "lycee.cirezi@gmail.com";
+	$school_city = "Bukavu";
+	$school_province = "Sud-Kivu";
+	$school_commune = "Ibanda";
+	$phone_1 = "+243 971 776 858";
+	$phone_2 = "+243 819 009 678";
 
 	// $school_name = "Collège Alfajiri";
 	// $school_name_abb = "Collège Alfajiri";
@@ -123,16 +123,16 @@
 	// $phone_1 = "+243 997 127 688";
 	// $phone_2 = "+243 977 271 146";
 
-	$school_name = "Lycée Wima";
-	$school_name_abb = "Lycée Wima";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P. 135 - BUKAVU";
-	$email_school = "lycee.wima@gmail.com";
-	$school_city = "Bukavu";
-	$school_province = "Sud-Kivu";
-	$school_commune = "Kadutu";
-	$phone_1 = "+243 994 108 986";
-	$phone_2 = "+243 971 995 370";
+	// $school_name = "Lycée Wima";
+	// $school_name_abb = "Lycée Wima";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. 135 - BUKAVU";
+	// $email_school = "lycee.wima@gmail.com";
+	// $school_city = "Bukavu";
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Kadutu";
+	// $phone_1 = "+243 994 108 986";
+	// $phone_2 = "+243 971 995 370";
 
 	// $school_name = "Complexe Scolaire \"Les Progrès\"";
 	// // $school_name_abb = "Masomo";
