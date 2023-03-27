@@ -228,130 +228,130 @@
 	// sbahati@gmail.com
 	// c.stella@jesuits.net
 
-	function make_users() {
-        global $database_connect;
-        $query = "SELECT * FROM users WHERE username=?";
-        $request = $database_connect->prepare($query);
-        $request->execute(array(""));
-        while($response = $request->fetchObject()) {
-            $poste = $response->poste;
+	// function make_users() {
+    //     global $database_connect;
+    //     $query = "SELECT * FROM users WHERE username=?";
+    //     $request = $database_connect->prepare($query);
+    //     $request->execute(array(""));
+    //     while($response = $request->fetchObject()) {
+    //         $poste = $response->poste;
     
-            if ($poste == "1") {
-                $user = "principal@yambi.class";
-            } else if ($poste == "2") {
-                $user = "discipline@yambi.class";
-            } else if ($poste == "7") {
-                $user = "etudes@yambi.class";
-            } else if ($poste == "4") {
-                $user = "secretaire@yambi.class";
-            } else if ($poste == "5") {
-                $user = "enseignant@yambi.class";
-            } else if ($poste == "3") {
-                $user = "finances@yambi.class";
-            } else if ($poste == "6") {
-                $user = "caisse@yambi.class";
-            } else {
-                $user = "";
-            }
+    //         if ($poste == "1") {
+    //             $user = "principal@yambi.class";
+    //         } else if ($poste == "2") {
+    //             $user = "discipline@yambi.class";
+    //         } else if ($poste == "7") {
+    //             $user = "etudes@yambi.class";
+    //         } else if ($poste == "4") {
+    //             $user = "secretaire@yambi.class";
+    //         } else if ($poste == "5") {
+    //             $user = "enseignant@yambi.class";
+    //         } else if ($poste == "3") {
+    //             $user = "finances@yambi.class";
+    //         } else if ($poste == "6") {
+    //             $user = "caisse@yambi.class";
+    //         } else {
+    //             $user = "";
+    //         }
     
-            if ($response->username == "") {
-                $update_query = "UPDATE users SET username='$user' WHERE user_id='$response->user_id'";
-                $update_request = $database_connect->query($update_query);
-            }
-        }
-    }
+    //         if ($response->username == "") {
+    //             $update_query = "UPDATE users SET username='$user' WHERE user_id='$response->user_id'";
+    //             $update_request = $database_connect->query($update_query);
+    //         }
+    //     }
+    // }
 
-	function insert_users() {
-		global $database_connect;
-	    $verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(1));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(1, "principal@yambi.class", sha1("000000")));
-	    }
+	// function insert_users() {
+	// 	global $database_connect;
+	//     $verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(1));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(1, "principal@yambi.class", sha1("000000")));
+	//     }
 
-		$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(2));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(2, "discipline@yambi.class", sha1("000000")));
-	    }
+	// 	$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(2));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(2, "discipline@yambi.class", sha1("000000")));
+	//     }
 
-		$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(3));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(3, "finances@yambi.class", sha1("000000")));
-	    }
+	// 	$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(3));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(3, "finances@yambi.class", sha1("000000")));
+	//     }
 
-		$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(7));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(7, "etudes@yambi.class", sha1("000000")));
-	    }
+	// 	$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(7));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(7, "etudes@yambi.class", sha1("000000")));
+	//     }
 
-		$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(4));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(4, "secretaire@yambi.class", sha1("000000")));
-	    }
+	// 	$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(4));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(4, "secretaire@yambi.class", sha1("000000")));
+	//     }
 
-		$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(5));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(5, "enseignant@yambi.class", sha1("000000")));
-	    }
+	// 	$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(5));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(5, "enseignant@yambi.class", sha1("000000")));
+	//     }
 
-		$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
-	    $verify = $database_connect->prepare($verify_poste);
-	    $verify->execute(array(6));
-	    $response_verify = $verify->fetchObject();
-	    if($response_verify->count_if_already_inserted == 0) {
-	        $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
-	        $insert_user = $database_connect->prepare($insert_user_string);
-	        $insert_user->execute(array(6, "caisse@yambi.class", sha1("000000")));
-	    }
-	}
+	// 	$verify_poste = "SELECT poste, COUNT(*) AS count_if_already_inserted FROM users WHERE poste=?";
+	//     $verify = $database_connect->prepare($verify_poste);
+	//     $verify->execute(array(6));
+	//     $response_verify = $verify->fetchObject();
+	//     if($response_verify->count_if_already_inserted == 0) {
+	//         $insert_user_string = "INSERT INTO users(poste, username, user_password) VALUES(?, ?, ?)";
+	//         $insert_user = $database_connect->prepare($insert_user_string);
+	//         $insert_user->execute(array(6, "caisse@yambi.class", sha1("000000")));
+	//     }
+	// }
 
-	function delete_pupils() {
-		global $database_connect;
+	// function delete_pupils() {
+	// 	global $database_connect;
 
-		// $query = "SELECT * FROM pupils_info WHERE is_inactive=1";
-    	// $request = $database_connect->query($query);
-    	// while($response = $request->fetchObject()) {
-		// 	$paiementsDeleteQuery = "DELETE FROM paiements WHERE pupil_id=?";
-		// 	$paiementsDeleteRequest = $database_connect->prepare($paiementsDeleteQuery);
-		// 	$paiementsDeleteRequest->execute(array($response->pupil_id_bis));
+	// 	// $query = "SELECT * FROM pupils_info WHERE is_inactive=1";
+    // 	// $request = $database_connect->query($query);
+    // 	// while($response = $request->fetchObject()) {
+	// 	// 	$paiementsDeleteQuery = "DELETE FROM paiements WHERE pupil_id=?";
+	// 	// 	$paiementsDeleteRequest = $database_connect->prepare($paiementsDeleteQuery);
+	// 	// 	$paiementsDeleteRequest->execute(array($response->pupil_id_bis));
 
-		// 	$paiementsDeleteQuery = "DELETE FROM pupils_info WHERE is_inactive=?";
-		// 	$paiementsDeleteRequest = $database_connect->prepare($paiementsDeleteQuery);
-		// 	$paiementsDeleteRequest->execute(array(1));
-		// }
-	}
+	// 	// 	$paiementsDeleteQuery = "DELETE FROM pupils_info WHERE is_inactive=?";
+	// 	// 	$paiementsDeleteRequest = $database_connect->prepare($paiementsDeleteQuery);
+	// 	// 	$paiementsDeleteRequest->execute(array(1));
+	// 	// }
+	// }
 
-	make_users();
-	insert_users();
-	delete_pupils();
+	// make_users();
+	// insert_users();
+	// delete_pupils();
 
 ?>

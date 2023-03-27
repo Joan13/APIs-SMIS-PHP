@@ -86,6 +86,19 @@
     //     }
     // }
 
+    $number_year_query = "SELECT school_year, COUNT(*) AS count_ppp FROM pupils_info WHERE school_year='$annee'";
+    $number_year_request = $database_connect->query($number_year_query);
+    $number_year_response = $number_year_request->fetchObject();
+
+    $number_year_queryy = "SELECT paiement_category, school_year, COUNT(*) AS count_ppp FROM pupils_info WHERE paiement_category='0' AND school_year='$annee'";
+    $number_year_requesty = $database_connect->query($number_year_queryy);
+    $number_year_responsey = $number_year_requesty->fetchObject();
+
+    if ($number_year_response->count_ppp == $number_year_responsey->count_ppp) {
+        $modify_queryp = "UPDATE pupils_info SET paiement_category='1' WHERE school_year='$annee'";
+		$modify_requestp = $database_connect->query($modify_queryp);
+    }
+
     $categories_query = "SELECT * FROM paiement_categories WHERE school_year='$annee'";
     $categories_request = $database_connect->query($categories_query);
     $categories_response = $categories_request->fetchObject();
@@ -94,6 +107,13 @@
 	$request_countc = $database_connect->prepare($query_countc);
 	$request_countc->execute(array($annee));
 	$response_countc = $request_countc->fetchObject();
+
+	if ($response_countc->count_paiement_categories == 0) {
+        $queryrt = "INSERT INTO paiement_categories(category_name, category_amount, school_year)
+                            VALUES(?, ?, ?) ";
+        $requestrt = $database_connect->prepare($queryrt);
+        $requestrt->execute(array("A", "165", $annee));
+    }
 
 	if ($response_countc->count_paiement_categories != 0) {
 		$querypc = "SELECT * FROM paiement_categories WHERE school_year=?";
