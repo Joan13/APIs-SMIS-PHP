@@ -354,4 +354,23 @@
 	// insert_users();
 	// delete_pupils();
 
+	// function randomUserId($length) {
+    // 	$alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // 	return substr(str_shuffle(str_repeat($alphabet, $length)), $length, $length);
+    // }
+
+	// $query = "SELECT * FROM pupils_info";
+	// $request = $database_connect->query($query);
+	// while($response = $request->fetchObject()) {
+
+	// 	$first_name = randomUserId(strlen($response->first_name));
+	// 	$second_name = randomUserId(strlen($response->second_name));
+	// 	$last_name = randomUserId(strlen($response->last_name));
+
+	// 	$update_query = "UPDATE pupils_info SET first_name='$first_name', second_name='$second_name', last_name='$last_name' WHERE pupil_id='$response->pupil_id'";
+	// 	$update_request = $database_connect->query($update_query);
+	// }
+
+
+
 ?>
