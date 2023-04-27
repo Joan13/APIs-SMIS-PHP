@@ -1,7 +1,7 @@
 <?php
 
 	$dbhost = 'localhost';
-	$dbname = 'school_administration';
+	$dbname = 'cirezi';
 	$dbuser = 'root';
 	$dbpassword = '';
 
