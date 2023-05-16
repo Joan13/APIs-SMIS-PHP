@@ -30,7 +30,7 @@
 
 	// $dbhostExport = '185.98.131.177';
 	// $dbnameExport = 'colle1982315';
-	// $dbuserExport = 'colle1982315';
+	// $dbuserExport = 'colle1982315';	
 	// $dbpasswordExport = '0amlyzotyp';
 
 	// $dbhostExport = 'localhost';
@@ -58,25 +58,6 @@
 	// 	die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
 	// }
 
-
-	// $school_name = "Ecole \"Académie La Renaisssance\"";
-	// $school_name_abb = "CS La Renaissance";
-	// $devise_school = "Une école référence";
-	// $school_bp = "B.P. 2276 - BUKAVU";
-	// $email_school = "larenaissance@gmail.com";
-
-	// $school_name = "Complexe Scolaire Le Progrès";
-	// $school_name_abb = "Le Progrès";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P. 2276 - BUKAVU";
-	// $email_school = "csleprogresbukavu@gmail.com";
-
-	// $school_name = "Collège Alfajiri";
-	// $school_name_abb = "Collège Alfajiri";
-	// $devise_school = "Stella Duce";
-	// $school_bp = "B.P. 2276 - BUKAVU";
-	// $email_school = "college.alfajiri@gmail.com";
-
 	// $school_name = "Masomo";
 	// // $school_name_abb = "Masomo";
 	// $school_name_abb = "Masomo";
@@ -84,6 +65,7 @@
 	// $school_bp = "B.P.  - BUKAVU";
 	// $email_school = "masomo@gmail.com";
 	// $school_city = "Bukavu";
+	// $public = true;
 	// $school_province = "Sud-Kivu";
 	// $school_commune = "Ibanda";
 	// $phone_1 = "+243 991 776 858";
@@ -96,32 +78,35 @@
 	// $school_bp = "B.P.  - BUKAVU";
 	// $email_school = "cs.elite@gmail.com";
 	// $school_city = "Bukavu";
+	// $public = false;
 	// $school_province = "Sud-Kivu";
 	// $school_commune = "Ibanda";
 	// $phone_1 = "+243 991 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	$school_name = "Lycée Cirezi";
-	$school_name_abb = "Lycée Cirezi";
+	// $school_name = "Lycée Cirezi";
+	// $school_name_abb = "Lycée Cirezi";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. 2276 - BUKAVU";
+	// $email_school = "lycee.cirezi@gmail.com";
+	// $school_city = "Bukavu";
+	// $public = true;
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 971 776 858";
+	// $phone_2 = "+243 819 009 678";
+
+	$school_name = "Collège Alfajiri";
+	$school_name_abb = "Collège Alfajiri";
 	$devise_school = "Une école de référence";
-	$school_bp = "B.P. 2276 - BUKAVU";
-	$email_school = "lycee.cirezi@gmail.com";
+	$school_bp = "B.P. 1612 - BUKAVU";
+	$public = true;
+	$email_school = "c.stella@jesuits.net";
 	$school_city = "Bukavu";
 	$school_province = "Sud-Kivu";
 	$school_commune = "Ibanda";
-	$phone_1 = "+243 971 776 858";
-	$phone_2 = "+243 819 009 678";
-
-	// $school_name = "Collège Alfajiri";
-	// $school_name_abb = "Collège Alfajiri";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P. 1612 - BUKAVU";
-	// $email_school = "c.stella@jesuits.net";
-	// $school_city = "Bukavu";
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 997 127 688";
-	// $phone_2 = "+243 977 271 146";
+	$phone_1 = "+243 997 127 688";
+	$phone_2 = "+243 977 271 146";
 
 	// $school_name = "Lycée Wima";
 	// $school_name_abb = "Lycée Wima";
@@ -129,6 +114,7 @@
 	// $school_bp = "B.P. 135 - BUKAVU";
 	// $email_school = "lycee.wima@gmail.com";
 	// $school_city = "Bukavu";
+	// $public = true;
 	// $school_province = "Sud-Kivu";
 	// $school_commune = "Kadutu";
 	// $phone_1 = "+243 994 108 986";
@@ -141,26 +127,9 @@
 	// $school_bp = "B.P. - BUKAVU";
 	// $email_school = "cs.lesprogres@gmail.com";
 	// $school_city = "Bukavu";
+	// $public = false;
 	// $school_province = "Sud-Kivu";
 	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 994 108 986";
-	// $phone_2 = "+243 971 995 370";
-
-	// $school_name = "Collège Saint-Paul";
-	// $school_name_abb = "Collège Saint-Paul";
-	// $devise_school = "Labore et Caritate";
-	// $school_bp = "B.P. 2276 - BUKAVU";
-	// $email_school = "college.saintpaul@gmail.com";
-
-	// $school_city = "Bukavu";
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 971 776 858";
-	// $phone_2 = "+243 819 009 678";
-
-	// $school_city = "Bukavu";
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Kadutu";
 	// $phone_1 = "+243 994 108 986";
 	// $phone_2 = "+243 971 995 370";
 
