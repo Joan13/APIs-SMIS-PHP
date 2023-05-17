@@ -174,23 +174,13 @@ while ($response_paiements = $request_paiements->fetchObject()) {
     $payes = $payes + $response_paiements->montant_paye;
 }
 
-// $query_selections = "SELECT * FROM selections WHERE school_year='$annee'";
-// $request_selections = $database_connect->query($query_selections);
-// while($response_selections = $request_selections->fetchObject()) {
+$query_selections = "SELECT * FROM selections WHERE school_year='$annee'";
+$request_selections = $database_connect->query($query_selections);
+while($response_selections = $request_selections->fetchObject()) {
 
-//     $selection = array();
-//     $selection_data = array();
-
-//     $query_selections_data = "SELECT * FROM selection_data WHERE selection_id='$response_selections->selection_id'";
-//     $request_selections_data = $database_connect->query($query_selections_data);
-//     while($response_selections_data = $request_selections_data->fetchObject()) {
-//         array_push($selection_data, $response_selections_data);
-//     }
-
-//     $selection['selection'] = $response_selections;
-//     $selection['selection_data'] = $selection_data;
-//     array_push($selections, $selection);
-// }
+    $selection = array();
+    array_push($selections, $response_selections);
+}
 
 $query = "SELECT * FROM school_years ORDER BY year_id DESC";
 $request = $database_connect->query($query);
