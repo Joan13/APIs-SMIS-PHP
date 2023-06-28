@@ -1,19 +1,19 @@
 <?php
 
-	// $dbhost = 'localhost';
-	// $dbname = 'cirezi';
-	// $dbuser = 'root';
-	// $dbpassword = '';
+	$dbhost = 'localhost';
+	$dbname = 'cirezi';
+	$dbuser = 'root';
+	$dbpassword = '';
 
 	// $dbhost = '185.98.131.177';
 	// $dbname = 'cseli1969453';
 	// $dbuser = 'cseli1969453';
 	// $dbpassword = 'wo5gbupe02';
 
-	$dbhost = '185.98.131.177';
-	$dbname = 'colle1982315';
-	$dbuser = 'colle1982315';
-	$dbpassword = '0amlyzotyp';
+	// $dbhost = '185.98.131.177';
+	// $dbname = 'colle1982315';
+	// $dbuser = 'colle1982315';
+	// $dbpassword = '0amlyzotyp';
 
 	try {
 		$database_connect = new PDO('mysql:host='.$dbhost.';dbname='.$dbname,$dbuser,$dbpassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
@@ -58,18 +58,18 @@
 	// 	die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
 	// }
 
-	// $school_name = "Masomo";
-	// // $school_name_abb = "Masomo";
+	$school_name = "Masomo";
 	// $school_name_abb = "Masomo";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P.  - BUKAVU";
-	// $email_school = "masomo@gmail.com";
-	// $school_city = "Bukavu";
-	// $public = true;
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 991 776 858";
-	// $phone_2 = "+243 819 009 678";
+	$school_name_abb = "Masomo";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P.  - BUKAVU";
+	$email_school = "masomo@gmail.com";
+	$school_city = "Bukavu";
+	$public = true;
+	$school_province = "Sud-Kivu";
+	$school_commune = "Ibanda";
+	$phone_1 = "+243 991 776 858";
+	$phone_2 = "+243 819 009 678";
 
 	// $school_name = "Complexe Scolaire \"Élite\"";
 	// // $school_name_abb = "Masomo";
@@ -96,17 +96,17 @@
 	// $phone_1 = "+243 971 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	$school_name = "Collège Alfajiri";
-	$school_name_abb = "Collège Alfajiri";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P. 1612 - BUKAVU";
-	$public = true;
-	$email_school = "c.stella@jesuits.net";
-	$school_city = "Bukavu";
-	$school_province = "Sud-Kivu";
-	$school_commune = "Ibanda";
-	$phone_1 = "+243 997 127 688";
-	$phone_2 = "+243 977 271 146";
+	// $school_name = "Collège Alfajiri";
+	// $school_name_abb = "Collège Alfajiri";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. 1612 - BUKAVU";
+	// $public = true;
+	// $email_school = "c.stella@jesuits.net";
+	// $school_city = "Bukavu";
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 997 127 688";
+	// $phone_2 = "+243 977 271 146";
 
 	// $school_name = "Lycée Wima";
 	// $school_name_abb = "Lycée Wima";
