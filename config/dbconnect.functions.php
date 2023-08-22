@@ -1,7 +1,7 @@
 <?php
 
 	$dbhost = 'localhost';
-	$dbname = 'cirezi';
+	$dbname = 'wima';
 	$dbuser = 'root';
 	$dbpassword = '';
 
@@ -58,18 +58,31 @@
 	// 	die('Error: We are unable to access internet. Retry Later : ' . $database_error->getMessage());
 	// }
 
-	$school_name = "Masomo";
+	// $school_name = "Masomo";
+	// // $school_name_abb = "Masomo";
 	// $school_name_abb = "Masomo";
-	$school_name_abb = "Masomo";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P.  - BUKAVU";
-	$email_school = "masomo@gmail.com";
-	$school_city = "Bukavu";
-	$public = true;
-	$school_province = "Sud-Kivu";
-	$school_commune = "Ibanda";
-	$phone_1 = "+243 991 776 858";
-	$phone_2 = "+243 819 009 678";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P.  - BUKAVU";
+	// $email_school = "masomo@gmail.com";
+	// $school_city = "Bukavu";
+	// $public = true;
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 991 776 858";
+	// $phone_2 = "+243 819 009 678";
+
+	// $school_name = "C. S. Étoile";
+	// // $school_name_abb = "Masomo";
+	// $school_name_abb = "C. S. Étoile";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P.  - BUKAVU";
+	// $email_school = "masomo@gmail.com";
+	// $school_city = "Bukavu";
+	// $public = true;
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 991 776 858";
+	// $phone_2 = "+243 819 009 678";
 
 	// $school_name = "Complexe Scolaire \"Élite\"";
 	// // $school_name_abb = "Masomo";
@@ -93,8 +106,8 @@
 	// $public = true;
 	// $school_province = "Sud-Kivu";
 	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 971 776 858";
-	// $phone_2 = "+243 819 009 678";
+	// $phone_1 = "+243 974 902 738";
+	// $phone_2 = "+243 853 374 331";
 
 	// $school_name = "Collège Alfajiri";
 	// $school_name_abb = "Collège Alfajiri";
@@ -108,17 +121,17 @@
 	// $phone_1 = "+243 997 127 688";
 	// $phone_2 = "+243 977 271 146";
 
-	// $school_name = "Lycée Wima";
-	// $school_name_abb = "Lycée Wima";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P. 135 - BUKAVU";
-	// $email_school = "lycee.wima@gmail.com";
-	// $school_city = "Bukavu";
-	// $public = true;
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Kadutu";
-	// $phone_1 = "+243 994 108 986";
-	// $phone_2 = "+243 971 995 370";
+	$school_name = "Lycée Wima";
+	$school_name_abb = "Lycée Wima";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P. 135 - BUKAVU";
+	$email_school = "lycee.wima@gmail.com";
+	$school_city = "Bukavu";
+	$public = true;
+	$school_province = "Sud-Kivu";
+	$school_commune = "Kadutu";
+	$phone_1 = "+243 994 108 986";
+	$phone_2 = "+243 971 995 370";
 
 	// $school_name = "Complexe Scolaire \"Les Progrès\"";
 	// // $school_name_abb = "Masomo";
@@ -328,16 +341,27 @@
     // 	return substr(str_shuffle(str_repeat($alphabet, $length)), $length, $length);
     // }
 
-	// $query = "SELECT * FROM pupils_info";
+	// $query = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() LIMIT 1000";
 	// $request = $database_connect->query($query);
 	// while($response = $request->fetchObject()) {
 
-	// 	$first_name = randomUserId(strlen($response->first_name));
-	// 	$second_name = randomUserId(strlen($response->second_name));
-	// 	$last_name = randomUserId(strlen($response->last_name));
+	// 	$query1 = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() DESC LIMIT 100";
+	// $request1 = $database_connect->query($query1);
+	// $response1 = $request1->fetchObject();
 
-	// 	$update_query = "UPDATE pupils_info SET first_name='$first_name', second_name='$second_name', last_name='$last_name' WHERE pupil_id='$response->pupil_id'";
-	// 	$update_request = $database_connect->query($update_query);
+	// $query2 = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() DESC LIMIT 100";
+	// $request2 = $database_connect->query($query2);
+	// $response2 = $request2->fetchObject();
+
+	// 	// $first_name = randomUserId(strlen($response->first_name));
+	// 	// $second_name = randomUserId(strlen($response->second_name));
+	// 	// $last_name = randomUserId(strlen($response->last_name));
+
+	// 	// $update_query = "UPDATE pupils_infoo SET first_name='$first_name', second_name='$second_name', last_name='$last_name' WHERE pupil_id='$response->pupil_id'";
+	// 	// $update_request = $database_connect->query($update_query);
+
+	// 	echo trim('<strong>'.$response->last_name." ".$response1->first_name." ".$response->second_name.'</strong>'." ................ "."\n\n\n");
+		
 	// }
 
 
