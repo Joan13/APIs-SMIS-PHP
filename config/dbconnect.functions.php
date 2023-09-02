@@ -1,7 +1,7 @@
 <?php
 
 	$dbhost = 'localhost';
-	$dbname = 'wima';
+	$dbname = 'cirezi';
 	$dbuser = 'root';
 	$dbpassword = '';
 
@@ -97,17 +97,17 @@
 	// $phone_1 = "+243 991 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	// $school_name = "Lycée Cirezi";
-	// $school_name_abb = "Lycée Cirezi";
-	// $devise_school = "Une école de référence";
-	// $school_bp = "B.P. 2276 - BUKAVU";
-	// $email_school = "lycee.cirezi@gmail.com";
-	// $school_city = "Bukavu";
-	// $public = true;
-	// $school_province = "Sud-Kivu";
-	// $school_commune = "Ibanda";
-	// $phone_1 = "+243 974 902 738";
-	// $phone_2 = "+243 853 374 331";
+	$school_name = "Lycée Cirezi";
+	$school_name_abb = "Lycée Cirezi";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P. 2276 - BUKAVU";
+	$email_school = "lycee.cirezi@gmail.com";
+	$school_city = "Bukavu";
+	$public = true;
+	$school_province = "Sud-Kivu";
+	$school_commune = "Ibanda";
+	$phone_1 = "+243 974 902 738";
+	$phone_2 = "+243 853 374 331";
 
 	// $school_name = "Collège Alfajiri";
 	// $school_name_abb = "Collège Alfajiri";
@@ -121,17 +121,17 @@
 	// $phone_1 = "+243 997 127 688";
 	// $phone_2 = "+243 977 271 146";
 
-	$school_name = "Lycée Wima";
-	$school_name_abb = "Lycée Wima";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P. 135 - BUKAVU";
-	$email_school = "lycee.wima@gmail.com";
-	$school_city = "Bukavu";
-	$public = true;
-	$school_province = "Sud-Kivu";
-	$school_commune = "Kadutu";
-	$phone_1 = "+243 994 108 986";
-	$phone_2 = "+243 971 995 370";
+	// $school_name = "Lycée Wima";
+	// $school_name_abb = "Lycée Wima";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. 135 - BUKAVU";
+	// $email_school = "lycee.wima@gmail.com";
+	// $school_city = "Bukavu";
+	// $public = true;
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Kadutu";
+	// $phone_1 = "+243 994 108 986";
+	// $phone_2 = "+243 971 995 370";
 
 	// $school_name = "Complexe Scolaire \"Les Progrès\"";
 	// // $school_name_abb = "Masomo";
@@ -341,15 +341,15 @@
     // 	return substr(str_shuffle(str_repeat($alphabet, $length)), $length, $length);
     // }
 
-	// $query = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() LIMIT 1000";
+	// $query = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() LIMIT 600";
 	// $request = $database_connect->query($query);
 	// while($response = $request->fetchObject()) {
 
-	// 	$query1 = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() DESC LIMIT 100";
+	// 	$query1 = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() DESC LIMIT 2400";
 	// $request1 = $database_connect->query($query1);
 	// $response1 = $request1->fetchObject();
 
-	// $query2 = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() DESC LIMIT 100";
+	// $query2 = "SELECT * FROM pupils_info WHERE gender=1 ORDER BY RAND() DESC LIMIT 2400";
 	// $request2 = $database_connect->query($query2);
 	// $response2 = $request2->fetchObject();
 
@@ -360,7 +360,7 @@
 	// 	// $update_query = "UPDATE pupils_infoo SET first_name='$first_name', second_name='$second_name', last_name='$last_name' WHERE pupil_id='$response->pupil_id'";
 	// 	// $update_request = $database_connect->query($update_query);
 
-	// 	echo trim('<strong>'.$response->last_name." ".$response1->first_name." ".$response->second_name.'</strong>'." ................ "."\n\n\n");
+	// 	echo trim('<strong>'.$response->last_name." ".$response1->first_name." ".$response2->second_name.'</strong>'." ................ "."\n\n\n");
 		
 	// }
 
