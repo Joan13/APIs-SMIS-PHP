@@ -272,6 +272,14 @@ while ($query_fetch = $query_fetch11->fetchObject()) {
         $courses_count = $courses_count + 1;
     }
 
+    $hh = 0;
+    $query_timetable_config = "SELECT * FROM trics_timetable WHERE class_id='$query_fetch->id_classes'";
+    $request_timetable_config = $database_connect->query($query_timetable_config);
+    while($response_timetable_config = $request_timetable_config->fetchObject()) {
+        $hh = $hh + $response_timetable_config->hours_per_week;
+    }
+
+    $class['timetable_hours'] = $hh;
     $class['id_classes'] = $query_fetch->id_classes;
     $class['cycle_id'] = $cycle_name;
     $class['class_id'] = $class_number;

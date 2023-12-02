@@ -97,17 +97,17 @@
 	// $phone_1 = "+243 991 776 858";
 	// $phone_2 = "+243 819 009 678";
 
-	$school_name = "Lycée Cirezi";
-	$school_name_abb = "Lycée Cirezi";
-	$devise_school = "Une école de référence";
-	$school_bp = "B.P. 2276 - BUKAVU";
-	$email_school = "lycee.cirezi@gmail.com";
-	$school_city = "Bukavu";
-	$public = true;
-	$school_province = "Sud-Kivu";
-	$school_commune = "Ibanda";
-	$phone_1 = "+243 974 902 738";
-	$phone_2 = "+243 853 374 331";
+	// $school_name = "Lycée Cirezi";
+	// $school_name_abb = "Lycée Cirezi";
+	// $devise_school = "Une école de référence";
+	// $school_bp = "B.P. 2276 - BUKAVU";
+	// $email_school = "lycee.cirezi@gmail.com";
+	// $school_city = "Bukavu";
+	// $public = true;
+	// $school_province = "Sud-Kivu";
+	// $school_commune = "Ibanda";
+	// $phone_1 = "+243 974 902 738";
+	// $phone_2 = "+243 853 374 331";
 
 	// $school_name = "Collège Alfajiri";
 	// $school_name_abb = "Collège Alfajiri";
@@ -120,6 +120,18 @@
 	// $school_commune = "Ibanda";
 	// $phone_1 = "+243 997 127 688";
 	// $phone_2 = "+243 977 271 146";
+
+	$school_name = "Institut Nyalukemba";
+	$school_name_abb = "Institut Nyalukemba";
+	$devise_school = "Une école de référence";
+	$school_bp = "B.P. 1612 - BUKAVU";
+	$public = true;
+	$email_school = "c.stella@jesuits.net";
+	$school_city = "Bukavu";
+	$school_province = "Sud-Kivu";
+	$school_commune = "Ibanda";
+	$phone_1 = "+243 997 127 688";
+	$phone_2 = "+243 977 271 146";
 
 	// $school_name = "Lycée Wima";
 	// $school_name_abb = "Lycée Wima";

@@ -143,7 +143,7 @@ if ($response_count->count_pupils_exist != 0) {
 
         $pupils_count = $pupils_count + 1;
 
-        if ($response_pupil->paiement_category != '0') {
+        if ($response_pupil->paiement_category != 0) {
             $category_query = "SELECT * FROM paiement_categories WHERE category_id='$response_pupil->paiement_category' AND school_year='$school_year'";
             $category_request = $database_connect->query($category_query);
             $category_response = $category_request->fetchObject();
